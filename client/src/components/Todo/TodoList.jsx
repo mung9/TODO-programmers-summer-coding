@@ -26,7 +26,6 @@ function TodoItem({ todo }) {
           <span>{isOverdue(todo.due) && !todo.done ? "⚠️" : null}</span>
         </div>
         <p className="todo-content">{todo.content}</p>
-        {/* <p className='todo-due'>{todo.due}</p> */}
         <p className="todo-done">{todo.done}</p>
       </div>
     </li>
