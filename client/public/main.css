@@ -1,0 +1,106 @@
+.container {
+  background-color: #efefef;
+  padding: 10% 5%;
+}
+
+.todo-list {
+  width: 80%;
+  /* width: fit-content; */
+  display: flex;
+  margin: auto;
+  justify-content: baseline;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 767px) {
+  .todo-list .todo-item {
+    flex-basis: 90%;
+    margin-bottom: 3%;
+    margin-right: auto;
+    margin-left: auto;
+    border-radius: 0.4em;
+    border: 1px solid black;
+    display: inline-block;
+  }
+}
+
+@media (min-width: 768px) {
+  .todo-list .todo-item {
+    flex-basis: 45%;
+    margin-bottom: 3%;
+    margin-right: auto;
+    /* margin: 0 auto 10px auto; */
+    border-radius: 0.4em;
+    border: 1px solid black;
+    display: inline-block;
+  }
+}
+
+.todo-list .todo-item .todo-item-controller {
+  margin-top:  .2em;
+  margin-left: .5em;
+  color: #333;
+  font-weight: bold;
+}
+
+.todo-list .todo-item .content{
+  margin: 0 5% 5% 5%;
+}
+
+.todo-list .todo-item .content .header {
+  margin-bottom: 5px;
+}
+
+.todo-list .todo-item .content .header .todo-title {
+  display: inline-block;
+}
+
+.todo-list .todo-item.done .content .header {
+  color: green;
+}
+
+.todo-list .todo-item.done .content .header .todo-title::before {
+  content: " ✔ ";
+  font-size: 1em;
+}
+
+body {margin:0;padding:0;background-color:#fff;}
+
+hr {display:none;clear:both;}
+img,fieldset {border:0 none;}
+h1,h2,h3,h4,h5,dl,dt,dd,ul,li,ol,th,td,p,blockquote,form,fieldset,legend {margin:0;padding:0;}
+table {border-collapse:collapse;border:0 none;}
+form, p {margin: 0px;}
+button {margin:0;padding:0;border:0 none;background:transparent;*overflow:visible;cursor:pointer;}
+button::-moz-focus-inner {padding:0;border:0;}
+a:link {color:#3366cc;text-decoration:none;}
+a:visited {color:#3366cc;text-decoration:none;}
+a:active {color:#3366cc;text-decoration:none;}
+a:hover {color:#2850a2;text-decoration:none;}
+body,table,th,td,input,select,textarea,div {
+font-family: "verdana";
+font-size: 12px;
+color: #333;
+font-style: normal;
+line-height:18px;
+margin:0;
+word-spacing:-1pt;
+word-break:break-all;
+}
+
+li {
+  list-style: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+Header {
+  background-color: white;
+  height: 80px;
+}
+
+Footer{
+  background-color: #444;
+  height: 80px;
+}
