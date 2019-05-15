@@ -15,7 +15,9 @@
 .todo-list .todo-item {
   background-color: white;
   border-radius: 0.4em;
-  box-shadow: .3em .3em .7em .3em rgba(0,0,0,.4);
+  height: fit-content;
+  box-shadow: 0.3em 0.3em 0.7em 0.3em rgba(0, 0, 0, 0.4);
+  margin-bottom: 3%;
   /* border: 2px solid #777; */
   display: inline-block;
 }
@@ -23,7 +25,6 @@
 @media (max-width: 767px) {
   .todo-list .todo-item {
     flex-basis: 90%;
-    margin-bottom: 3%;
     margin-right: auto;
     margin-left: auto;
   }
@@ -32,20 +33,56 @@
 @media (min-width: 768px) {
   .todo-list .todo-item {
     flex-basis: 45%;
-    margin-bottom: 3%;
     margin-right: auto;
   }
 }
 
-.todo-list .todo-item .todo-item-controller {
+.todo-list .todo-item .todo-item-top {
   margin-top: 0.2em;
-  margin-left: 0.5em;
+  margin-left: .5em;
   color: #333;
   font-weight: bold;
+  display: flex;
+}
+
+.todo-list .todo-item .todo-item-top .control-buttons {
+  flex:1;
+}
+
+.todo-list .todo-item .todo-item-top .control-buttons svg {
+  color: #777;
+  font-size: 1.5em;
+  margin-right: 5px;
+}
+
+.todo-list .todo-item .todo-item-top .notification {
+  flex:1;
+  margin-right: .5em;
+  text-align: right;
+}
+
+.todo-list .todo-item .todo-item-top .notification svg {
+  min-width: 1.5em;
+}
+
+.todo-list .todo-item .todo-item-top .notification .priority1 {
+  color: red;
+}
+
+.todo-list .todo-item .todo-item-top .notification .priority2 {
+  color: lightskyblue;
+}
+
+.todo-list .todo-item .todo-item-top .notification .priority3 {
+  color: black;
+}
+
+.todo-list .todo-item .todo-item-top .notification .warning {
+  color: rgb(255, 98, 42);
 }
 
 .todo-list .todo-item .content {
-  margin: 0 5% 5% 5%;
+  margin: 2% 5% 2% 5%;
 }
 
 .todo-list .todo-item .content .header {
@@ -64,7 +101,7 @@
   color: green;
 }
 
-.todo-list .todo-item.done .content .header .todo-title::before {
+.todo-list .todo-item.done .content .header .todo-title::after {
   content: " ✔ ";
   font-size: 1em;
 }

@@ -23,7 +23,30 @@ export default class Todo extends Component {
     this.setState({ todos });
   }
 
-  setDone = todo => {};
+  handleToggleDone = targetTodo => {
+    const todos = [...this.state.todos];
+    const index = todos.findIndex(todo => todo.id === targetTodo.id);
+    if (index === -1) {
+      return console.log(`${id}를 id로 가지는 todo가 존재하지 않음.`);
+    }
+
+    const todo = { ...todos[index] };
+    todo.done = !todo.done;
+
+    todos[index] = todo;
+    this.setState({ todos });
+  };
+
+  handleDelete = targetTodo => {
+    const todos = [...this.state.todos];
+    const index = todos.findIndex(todo => todo.id === targetTodo.id);
+    if (index === -1) {
+      return console.log(`${id}를 id로 가지는 todo가 존재하지 않음.`);
+    }
+
+    todos.splice(index, 1);
+    this.setState({ todos });
+  };
 
   getTodos = () => {
     return fakeTodos;
@@ -33,7 +56,11 @@ export default class Todo extends Component {
     const { todos } = this.state;
     return (
       <section className="container">
-        <TodoList todos={todos} />
+        <TodoList
+          todos={todos}
+          onToggleDone={this.handleToggleDone}
+          onDelete={this.handleDelete}
+        />
       </section>
     );
   }
@@ -59,7 +86,8 @@ const fakeTodos = [
   {
     id: 3,
     title: "Third",
-    content: "Dawn",
+    content:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ut totam reprehenderit autem nobis voluptatibus! Minus delectus ducimus neque aspernatur unde aperiam inventore officia accusamus doloremque, laudantium ea obcaecati adipisci!",
     due: new Date(2019, 3, 22),
     priority: 1,
     done: true
@@ -69,7 +97,7 @@ const fakeTodos = [
     title: "양치질하고 세수하기",
     content: "오늘 안하면 나의 건강은 더욱 악화된다.",
     due: new Date(2019, 3, 22),
-    priority: 1,
+    priority: 3,
     done: false
   },
   {
@@ -78,6 +106,38 @@ const fakeTodos = [
     content: "한 순간에 하나에만 집중하자.",
     due: new Date(2019, 3, 22),
     priority: 1,
+    done: false
+  },
+  {
+    id: 6,
+    title: "밥먹으면서 유튜브 보지 말기",
+    content: "한 순간에 하나에만 집중하자.",
+    due: new Date(2019, 3, 22),
+    priority: 2,
+    done: false
+  },
+  {
+    id: 7,
+    title: "밥먹으면서 유튜브 보지 말기",
+    content: "한 순간에 하나에만 집중하자.",
+    due: new Date(2019, 3, 22),
+    priority: 2,
+    done: false
+  },
+  {
+    id: 8,
+    title: "밥먹으면서 유튜브 보지 말기",
+    content: "한 순간에 하나에만 집중하자.",
+    due: new Date(2019, 3, 22),
+    priority: 1,
+    done: false
+  },
+  {
+    id: 9,
+    title: "밥먹으면서 유튜브 보지 말기",
+    content: "한 순간에 하나에만 집중하자.",
+    due: new Date(2019, 3, 22),
+    priority: 3,
     done: false
   }
 ];
