@@ -11,6 +11,7 @@
 
 import React, { Component } from "react";
 import TodoList from "./TodoList";
+import {nextPriorityOf} from './priority';
 import "./todo.css";
 
 export default class Todo extends Component {
@@ -48,6 +49,20 @@ export default class Todo extends Component {
     this.setState({ todos });
   };
 
+  handlePriorityChange = targetTodo => {
+    const todos = [...this.state.todos];
+    const index = todos.findIndex((todo)=>todo.id===targetTodo.id);
+    if(index==-1){
+      return console.log(`${id}를 id로 가지는 todo가 존재하지 않음.`);
+    }
+
+    const newTodo = {...todos[index]};
+    newTodo.priority = nextPriorityOf(newTodo.priority);
+    todos[index] = newTodo;
+    
+    this.setState({todos});
+  }
+
   getTodos = () => {
     return fakeTodos;
   };
@@ -60,6 +75,7 @@ export default class Todo extends Component {
           todos={todos}
           onToggleDone={this.handleToggleDone}
           onDelete={this.handleDelete}
+          onPriorityChange={this.handlePriorityChange}
         />
       </section>
     );
@@ -72,7 +88,7 @@ const fakeTodos = [
     title: "First",
     content: "hello",
     due: new Date(2019, 4, 16),
-    priority: 1,
+    priority: 2,
     done: false
   },
   {
@@ -80,7 +96,7 @@ const fakeTodos = [
     title: "Second",
     content: "Sunrise",
     due: new Date(2019, 5, 3),
-    priority: 2,
+    priority: 1,
     done: false
   },
   {
@@ -89,7 +105,7 @@ const fakeTodos = [
     content:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ut totam reprehenderit autem nobis voluptatibus! Minus delectus ducimus neque aspernatur unde aperiam inventore officia accusamus doloremque, laudantium ea obcaecati adipisci!",
     due: new Date(2019, 3, 22),
-    priority: 1,
+    priority: 2,
     done: true
   },
   {
@@ -97,7 +113,7 @@ const fakeTodos = [
     title: "양치질하고 세수하기",
     content: "오늘 안하면 나의 건강은 더욱 악화된다.",
     due: new Date(2019, 3, 22),
-    priority: 3,
+    priority: 0,
     done: false
   },
   {
@@ -105,7 +121,7 @@ const fakeTodos = [
     title: "밥먹으면서 유튜브 보지 말기",
     content: "한 순간에 하나에만 집중하자.",
     due: new Date(2019, 3, 22),
-    priority: 1,
+    priority: 2,
     done: false
   },
   {
@@ -113,7 +129,7 @@ const fakeTodos = [
     title: "밥먹으면서 유튜브 보지 말기",
     content: "한 순간에 하나에만 집중하자.",
     due: new Date(2019, 3, 22),
-    priority: 2,
+    priority: 0,
     done: false
   },
   {
@@ -121,7 +137,7 @@ const fakeTodos = [
     title: "밥먹으면서 유튜브 보지 말기",
     content: "한 순간에 하나에만 집중하자.",
     due: new Date(2019, 3, 22),
-    priority: 2,
+    priority: 1,
     done: false
   },
   {
@@ -129,7 +145,7 @@ const fakeTodos = [
     title: "밥먹으면서 유튜브 보지 말기",
     content: "한 순간에 하나에만 집중하자.",
     due: new Date(2019, 3, 22),
-    priority: 1,
+    priority: 2,
     done: false
   },
   {
@@ -137,7 +153,7 @@ const fakeTodos = [
     title: "밥먹으면서 유튜브 보지 말기",
     content: "한 순간에 하나에만 집중하자.",
     due: new Date(2019, 3, 22),
-    priority: 3,
+    priority: 0,
     done: false
   }
 ];

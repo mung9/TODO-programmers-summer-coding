@@ -20,6 +20,7 @@
   margin-bottom: 3%;
   /* border: 2px solid #777; */
   display: inline-block;
+  transition: all .2s;
 }
 
 @media (max-width: 767px) {
@@ -57,7 +58,7 @@
 
 .todo-list .todo-item .todo-item-top .notification {
   flex:1;
-  margin-right: .5em;
+  margin-right: .2em;
   text-align: right;
 }
 
@@ -65,15 +66,15 @@
   min-width: 1.5em;
 }
 
-.todo-list .todo-item .todo-item-top .notification .priority1 {
+.todo-list .todo-item .todo-item-top .notification .priority2 {
   color: red;
 }
 
-.todo-list .todo-item .todo-item-top .notification .priority2 {
-  color: lightskyblue;
+.todo-list .todo-item .todo-item-top .notification .priority1 {
+  color: green;
 }
 
-.todo-list .todo-item .todo-item-top .notification .priority3 {
+.todo-list .todo-item .todo-item-top .notification .priority0 {
   color: black;
 }
 
