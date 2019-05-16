@@ -17,25 +17,19 @@
 
 ### Node.js (10.x)
 
-Node.js를 [여기](https://nodejs.org/ko/)에서 설치할 수 있습니다.
-아래의 명령어를 통해 node와 npm이 설치되었음을 확인합니다.
-npm은 node를 설치할 때 함께 설치됩니다.
-
+Node.js는 [여기](https://nodejs.org/ko/)에서 설치할 수 있습니다.
+혹은 명령창에서 다음 명령어로 설치할 수 있습니다.
 ```shell
-$ node --version
-v0.10.24
-
-$ npm --version
-1.3.21
+$ curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
+$ apt install nodejs
 ```
 
-#### Linux에서 명령어로 Node.js 설치하기
-
+아래의 명령어를 통해 nodejs와 npm이 설치되었음을 확인합니다.
 ```shell
-sudo apt-get install python-software-properties
-sudo add-apt-repository ppa:chris-lea/node.js
-sudo apt-get update
-sudo apt-get install nodejs
+$ node --version
+v10.15.3
+$ npm --version
+6.4.1
 ```
 
 ### MongoDB (4.x)
@@ -54,14 +48,18 @@ db version v4.0.6
 프로젝트를 원하는 디렉토리로 가져옵니다.
 
 ```shell
-$ git clone https://url.to.repository
+$ cd directory/path/you/want
+$ git clone https://github.com/mung9/TODO-programmers-summer-coding.git
 ```
 
 프로젝트의 루트 디렉토리로 이동하여 아래 명령어를 실행합니다. 
 서버 구동에 필요한 패키지들을 자동으로 설치해줍니다.
 ```shell
-$ cd PROJECT
+$ cd TODO-programmers-summer-coding
 $ npm install
+```
+
+```shell
 ```
 
 ### 클라이언트 종속성 설치
