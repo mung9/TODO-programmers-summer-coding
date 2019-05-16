@@ -6,7 +6,7 @@ export default function TodoList({
   todos,
   onToggleDone,
   onDelete,
-  onModify,
+  onEdit,
   onPriorityChange
 }) {
   return (
@@ -18,6 +18,7 @@ export default function TodoList({
           onToggleDone={onToggleDone}
           onDelete={onDelete}
           onPriorityChange={onPriorityChange}
+          onEdit={onEdit}
         />
       ))}
     </ul>
@@ -28,6 +29,6 @@ TodoList.propTypes = {
   todos: PropTypes.array,
   onToggleDone: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
-  onModify: PropTypes.func,
+  onEdit: PropTypes.func.isRequired,
   onPriorityChange: PropTypes.func.isRequired
 };

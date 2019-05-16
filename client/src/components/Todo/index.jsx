@@ -13,6 +13,7 @@ import React, { Component } from "react";
 import TodoList from "./TodoList";
 import {nextPriorityOf} from './priority';
 import "./todo.css";
+import { faDoorClosed } from "@fortawesome/free-solid-svg-icons";
 
 export default class Todo extends Component {
   state = {
@@ -39,6 +40,9 @@ export default class Todo extends Component {
   };
 
   handleDelete = targetTodo => {
+    const ok = window.confirm(`[${targetTodo.title}] 를 정말 삭제하시겠습니까?`);
+    if(!ok) return;
+
     const todos = [...this.state.todos];
     const index = todos.findIndex(todo => todo.id === targetTodo.id);
     if (index === -1) {
@@ -63,6 +67,15 @@ export default class Todo extends Component {
     this.setState({todos});
   }
 
+  handleEdit = targetTodo =>{
+    const todos = [...this.state.todos];
+    const index = todos.findIndex((todo)=>todo.id === targetTodo.id);
+    if(-1===index) return console.log(`${id}를 id로 가지는 todo가 존재하지 않음.`);
+
+    todos[index] = {...targetTodo};
+    this.setState({todos});
+  }
+
   getTodos = () => {
     return fakeTodos;
   };
@@ -76,6 +89,7 @@ export default class Todo extends Component {
           onToggleDone={this.handleToggleDone}
           onDelete={this.handleDelete}
           onPriorityChange={this.handlePriorityChange}
+          onEdit={this.handleEdit}
         />
       </section>
     );

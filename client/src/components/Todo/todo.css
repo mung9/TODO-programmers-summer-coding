@@ -86,23 +86,44 @@
   margin: 2% 5% 2% 5%;
 }
 
-.todo-list .todo-item .content .header {
+.todo-list .todo-item .content .content-header {
   margin-bottom: 5px;
 }
 
-.todo-list .todo-item .content .header .todo-title {
+.todo-list .todo-item .content .content-header .todo-title,
+.todo-list .todo-item .content .content-header .input-title {
   display: inline-block;
+  font-size: 1.4em;
+  font-weight: bold;
+  width: 100%;
+}
+
+.todo-list .todo-item .content .content-body .todo-content,
+.todo-list .todo-item .content .content-body .input-content {
+  word-wrap: normal;
+  font-size: 1em;
+  line-height: 1.6em;
+  width: 100%;
+  max-width: 100%;
+  overflow-wrap: normal;
+}
+
+.todo-list .todo-item .content .content-header .input-title,
+.todo-list .todo-item .content .content-body .input-content {
+  background: rgba(255,255,255,.5);
+  border: none;
+  border-bottom: 1px solid #444;
 }
 
 .todo-list .todo-item.done {
   background: rgba(178, 239, 178, 0.6);
 }
 
-.todo-list .todo-item.done .content .header {
+.todo-list .todo-item.done .content .content-header {
   color: green;
 }
 
-.todo-list .todo-item.done .content .header .todo-title::after {
+.todo-list .todo-item.done .content .content-header .todo-title::after {
   content: " ✔ ";
   font-size: 1em;
 }

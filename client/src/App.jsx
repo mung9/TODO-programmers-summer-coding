@@ -8,9 +8,9 @@ import './components/commons/common.css';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPen, faTimes, faCircle, faExclamationTriangle} from '@fortawesome/free-solid-svg-icons';
+import { faPen, faTimes, faCircle, faExclamationTriangle, faCheck, faTrash} from '@fortawesome/free-solid-svg-icons';
 
-library.add([faTimes, faPen, faCircle,faExclamationTriangle]);
+library.add([faTimes, faPen, faCircle,faExclamationTriangle, faCheck, faTrash]);
 
 export default class App extends Component {
   render() {
