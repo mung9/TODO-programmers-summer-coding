@@ -1,6 +1,16 @@
 Header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: white;
   height: 80px;
+}
+
+.header-logo {
+  color: #333;
+  font-size: 2em;
+  line-height: normal;
+  display: inline-block;
 }
 
 Footer{

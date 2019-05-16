@@ -1,9 +1,13 @@
-import React from 'react'
+import React from "react";
 
 export default function Header() {
   return (
     <header>
-      Header
+      <h1>
+        <a href="">
+          <span className="header-logo">TODO</span>
+        </a>
+      </h1>
     </header>
-  )
+  );
 }

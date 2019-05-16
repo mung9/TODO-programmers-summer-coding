@@ -7,10 +7,10 @@ table {border-collapse:collapse;border:0 none;}
 form, p {margin: 0px;}
 button {margin:0;padding:0;border:0 none;background:transparent;*overflow:visible;cursor:pointer;}
 button::-moz-focus-inner {padding:0;border:0;}
-a:link {color:#3366cc;text-decoration:none;}
-a:visited {color:#3366cc;text-decoration:none;}
-a:active {color:#3366cc;text-decoration:none;}
-a:hover {color:#2850a2;text-decoration:none;}
+a:link {color :none;text-decoration:none;}
+a:visited {color:none;text-decoration:none;}
+a:active {color:none;text-decoration:none;}
+a:hover {color:none;text-decoration:none;}
 body,table,th,td,input,select,textarea,div {
 font-family: "verdana";
 font-size: 12px;
