@@ -9,8 +9,7 @@ module.exports = exports = function(app) {
   );
 
   app.use(express.static(outputDir));
-  app.use("*", (req, res) => {
-    console.log(req.path);
+  app.use("/main", (req, res) => {
     res.sendFile(path.join(outputDir, "index.html"));
   });
 };

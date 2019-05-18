@@ -11,12 +11,13 @@ maxDate.setFullYear(now.getFullYear() + 50);
 const todoSchema = new mongoose.Schema({
   title: {
     type: String,
+    minlength: 1,
     maxlength: 50,
     required: true,
   },
   content: {
     type: String,
-    maxlength: 100,
+    maxlength: 1000,
     required: false,
     default: ''
   },
@@ -24,6 +25,10 @@ const todoSchema = new mongoose.Schema({
     type: Date,
     required: false,
     default: null
+  },
+  priority: {
+    type: Number,
+    default: 1
   },
   done: {
     type: Boolean,
@@ -41,9 +46,10 @@ const Todo = mongoose.model('Todo', todoSchema);
 function validate(todo) {
   const schema = {
     _id: Joi.objectId(),
-    title: Joi.string().max(50).required(),
+    title: Joi.string().min(1).max(50).required(),
     content: Joi.string().max(100).default(''),
     due: Joi.date(),
+    priority: Joi.number().default(1),
     done: Joi.boolean().default(false),
     regDate: Joi.date().default(Date.now()),
   };

@@ -1,0 +1,6 @@
+{
+  "database":{
+    "url": "mongodb://localhost/todo"
+  },
+  "jwtKey": ""
+}
