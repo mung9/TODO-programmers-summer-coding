@@ -10,26 +10,42 @@
 */
 
 import React, { Component } from "react";
+import { getTodos, postTodo, putTodo, deleteTodo } from "../../services/service";
 import TodoList from "./TodoList";
-import {nextPriorityOf} from './priority';
+import { nextPriorityOf } from "../commons/priority";
+import NewTodoForm from "./NewTodoForm";
+
 import "./todo.css";
-import { faDoorClosed } from "@fortawesome/free-solid-svg-icons";
 
 export default class Todo extends Component {
   state = {
     todos: []
   };
 
-  componentDidMount() {
-    const todos = this.getTodos();
+  async componentDidMount() {
+    const {data : todos} = await getTodos();
     this.setState({ todos });
   }
 
-  handleToggleDone = targetTodo => {
-    const todos = [...this.state.todos];
-    const index = todos.findIndex(todo => todo.id === targetTodo.id);
+  handleAddTodo = async targetTodo => {
+    try {
+      const { data: todo } = await postTodo(targetTodo);
+      todo.due = new Date(todo.due);
+      const todos = [...this.state.todos];
+      todos.push(todo);
+      this.setState({ todos });
+    } catch (error) {
+      console.error(error);
+      alert(`[${targetTodo.title}]를 추가하는데 실패했습니다.`);
+    }
+  };
+
+  handleToggleDone = async targetTodo => {
+    const originTodos = this.state.todos;
+    const todos = [...originTodos];
+    const index = todos.findIndex(todo => todo._id === targetTodo._id);
     if (index === -1) {
-      return console.log(`${id}를 id로 가지는 todo가 존재하지 않음.`);
+      return console.error(`${_id}를 id로 가지는 todo가 존재하지 않음.`);
     }
 
     const todo = { ...todos[index] };
@@ -37,44 +53,81 @@ export default class Todo extends Component {
 
     todos[index] = todo;
     this.setState({ todos });
-  };
 
-  handleDelete = targetTodo => {
-    const ok = window.confirm(`[${targetTodo.title}] 를 정말 삭제하시겠습니까?`);
-    if(!ok) return;
-
-    const todos = [...this.state.todos];
-    const index = todos.findIndex(todo => todo.id === targetTodo.id);
-    if (index === -1) {
-      return console.log(`${id}를 id로 가지는 todo가 존재하지 않음.`);
+    try {
+      await putTodo(todo);
+    } catch (error) {
+      console.error(error);
+      alert(`[${targetTodo.title}] 수정을 실패했습니다.`);
+      this.setState({todos:originTodos});
     }
-
-    todos.splice(index, 1);
-    this.setState({ todos });
   };
 
   handlePriorityChange = targetTodo => {
     const todos = [...this.state.todos];
-    const index = todos.findIndex((todo)=>todo.id===targetTodo.id);
-    if(index==-1){
-      return console.log(`${id}를 id로 가지는 todo가 존재하지 않음.`);
+    const index = todos.findIndex(todo => todo._id === targetTodo._id);
+    if (index == -1) {
+      return console.error(`${_id}를 id로 가지는 todo가 존재하지 않음.`);
     }
 
-    const newTodo = {...todos[index]};
+    const newTodo = { ...todos[index] };
     newTodo.priority = nextPriorityOf(newTodo.priority);
     todos[index] = newTodo;
-    
-    this.setState({todos});
-  }
 
-  handleEdit = targetTodo =>{
-    const todos = [...this.state.todos];
-    const index = todos.findIndex((todo)=>todo.id === targetTodo.id);
-    if(-1===index) return console.log(`${id}를 id로 가지는 todo가 존재하지 않음.`);
+    this.setState({ todos });
 
-    todos[index] = {...targetTodo};
-    this.setState({todos});
-  }
+    try {
+      await putTodo(todo);
+    } catch (error) {
+      console.error(error);
+      alert(`[${targetTodo.title}] 수정을 실패했습니다.`);
+      this.setState({todos:originTodos});
+    }
+  };
+
+  handleDelete = async targetTodo => {
+    const yes = window.confirm(
+      `[${targetTodo.title}] 를 정말 삭제하시겠습니까?`
+    );
+    if (!yes) return;
+
+    const originTodos = this.state.todos;
+    const todos = [...originTodos];
+    const index = todos.findIndex(todo => todo._id === targetTodo._id);
+    if (index === -1) {
+      return console.error(`${_id}를 id로 가지는 todo가 존재하지 않음.`);
+    }
+
+    todos.splice(index, 1);
+    this.setState({ todos });
+
+    try {
+      await deleteTodo(targetTodo._id);
+    } catch (error) {
+      console.error(error);
+      alert(`[${targetTodo.title}] 삭제를 실패했습니다.`);
+      this.setState({todos:originTodos});
+    }
+  };
+
+  handleEdit = async targetTodo => {
+    const originTodos = this.state.todos;
+    const todos = [...originTodos];
+    const index = todos.findIndex(todo => todo._id === targetTodo._id);
+    if (-1 === index)
+      return console.error(`${_id}를 id로 가지는 todo가 존재하지 않음.`);
+
+    todos[index] = { ...targetTodo };
+    this.setState({ todos });
+
+    try {
+      await putTodo(todos[index]);
+    } catch (error) {
+      alert(`[${todos[index].title}]를 수정하는 도중 오류가 발생하였습니다.`);
+      console.error(error);
+      this.setState({ todos: originTodos });
+    }
+  };
 
   getTodos = () => {
     return fakeTodos;
@@ -84,6 +137,7 @@ export default class Todo extends Component {
     const { todos } = this.state;
     return (
       <section className="container">
+        <NewTodoForm onAdd={this.handleAddTodo} />
         <TodoList
           todos={todos}
           onToggleDone={this.handleToggleDone}
@@ -95,79 +149,3 @@ export default class Todo extends Component {
     );
   }
 }
-
-const fakeTodos = [
-  {
-    id: 1,
-    title: "First",
-    content: "hello",
-    due: new Date(2019, 4, 16),
-    priority: 2,
-    done: false
-  },
-  {
-    id: 2,
-    title: "Second",
-    content: "Sunrise",
-    due: new Date(2019, 5, 3),
-    priority: 1,
-    done: false
-  },
-  {
-    id: 3,
-    title: "Third",
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ut totam reprehenderit autem nobis voluptatibus! Minus delectus ducimus neque aspernatur unde aperiam inventore officia accusamus doloremque, laudantium ea obcaecati adipisci!",
-    due: new Date(2019, 3, 22),
-    priority: 2,
-    done: true
-  },
-  {
-    id: 4,
-    title: "양치질하고 세수하기",
-    content: "오늘 안하면 나의 건강은 더욱 악화된다.",
-    due: new Date(2019, 3, 22),
-    priority: 0,
-    done: false
-  },
-  {
-    id: 5,
-    title: "밥먹으면서 유튜브 보지 말기",
-    content: "한 순간에 하나에만 집중하자.",
-    due: new Date(2019, 3, 22),
-    priority: 2,
-    done: false
-  },
-  {
-    id: 6,
-    title: "밥먹으면서 유튜브 보지 말기",
-    content: "한 순간에 하나에만 집중하자.",
-    due: new Date(2019, 3, 22),
-    priority: 0,
-    done: false
-  },
-  {
-    id: 7,
-    title: "밥먹으면서 유튜브 보지 말기",
-    content: "한 순간에 하나에만 집중하자.",
-    due: new Date(2019, 3, 22),
-    priority: 1,
-    done: false
-  },
-  {
-    id: 8,
-    title: "밥먹으면서 유튜브 보지 말기",
-    content: "한 순간에 하나에만 집중하자.",
-    due: new Date(2019, 3, 22),
-    priority: 2,
-    done: false
-  },
-  {
-    id: 9,
-    title: "밥먹으면서 유튜브 보지 말기",
-    content: "한 순간에 하나에만 집중하자.",
-    due: new Date(2019, 3, 22),
-    priority: 0,
-    done: false
-  }
-];

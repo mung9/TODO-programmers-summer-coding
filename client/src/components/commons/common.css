@@ -17,3 +17,91 @@ Footer{
   background-color: #444;
   height: 80px;
 }
+
+.input-group {
+  margin-bottom: 1em;
+}
+
+.input-group .input-label{
+  display: block;
+  margin-bottom: .3em;
+  font-weight: bold;
+  font-size: 1.2em;
+  line-height: 1.2em;
+}
+
+.input-group input,
+.input-group textarea {
+  display: block;
+  font-size: 1.2em;
+  line-height: 1.2em;
+  background: none;
+  border: 1px solid rgba(0,0,0,0);
+  border-bottom: 1px solid black;
+  border-radius: .3em;
+  padding: .3em;
+  transition: border .3s;
+}
+
+.input-group input {
+  
+}
+
+.input-group input:focus {
+  border: 1px solid orange;
+  outline: none;
+}
+
+.input-group textarea{
+}
+
+.input-group textarea:focus {
+  border: 1px solid orange;
+  outline: none;
+}
+
+.input-group .date-selector .selector-year,
+.input-group .date-selector .selector-month,
+.input-group .date-selector .selector-date {
+  display: inline-block;
+  margin-right: .7em;
+  font-size: 1.2em;
+  line-height: 1.2em;
+}
+
+.input-group .date-selector .selector-year select,
+.input-group .date-selector .selector-month select,
+.input-group .date-selector .selector-date select{
+  margin-right: .5em;
+
+}
+
+.priority-circle {
+  display: inline-block;
+}
+
+.priority-circle .priority-label {
+  margin-left: .3em;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.fa-disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.priority.priority2 {
+  color: red;
+}
+
+.priority.priority1 {
+  color: green;
+}
+
+.priority.priority0 {
+  color: black;
+}
+

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import PriorityCircle from '../commons/PriorityCircle';
+
 export default class TodoItem extends Component {
   constructor(props) {
     super(props);
@@ -37,7 +39,7 @@ export default class TodoItem extends Component {
         onDelete={onDelete}
         onPriorityChange={onPriorityChange}
         onToggleEdit={this.handleToggleEdit}
-        onEdit={()=>onEdit(todoBeingEdited)}
+        onEdit={() => onEdit(todoBeingEdited)}
         todoBeingEdited={todoBeingEdited}
       />
     );
@@ -141,10 +143,13 @@ function TodoItemTop({
               <FontAwesomeIcon
                 icon="check"
                 onClick={e => {
-                  onEdit();
-                  onToggleEdit();
+                  if (todoBeingEdited.title) {
+                    onEdit();
+                    onToggleEdit();
+                  }
                   e.stopPropagation();
                 }}
+                className={todoBeingEdited.title ? "" : "fa-disabled"}
               />
               <FontAwesomeIcon
                 icon="times"
@@ -171,13 +176,10 @@ function TodoItemTop({
         ) : (
           ""
         )}
-        <FontAwesomeIcon
-          icon="circle"
-          className={`priority priority${todo.priority}`}
-          onClick={e => {
-            onPriorityChange(todo);
-            e.stopPropagation();
-          }}
+        <PriorityCircle
+          item={todo}
+          onPriorityChange={onPriorityChange}
+          showLabel={false}
         />
       </div>
     </div>
