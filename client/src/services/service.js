@@ -14,7 +14,7 @@ axios.interceptors.response.use(null, function(error) {
   return Promise.reject(error);
 });
 
-const endPoint = process.env.API_URI + "/todo";
+const endPoint = "api/todo";
 
 function resolveDateFormat(todo) {
   todo.due = todo.due ? new Date(todo.due) : null;
