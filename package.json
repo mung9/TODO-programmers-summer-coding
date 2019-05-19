@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "homepage": "https://todo-2019-summer-coding.herokuapp.com",
   "scripts": {
     "client": "npm start --prefix client",
     "server": "nodemon index.js",
@@ -13,8 +14,8 @@
   "engines": {
     "node": "11.14.0"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["todo"],
+  "author": "mung9",
   "license": "ISC",
   "dependencies": {
     "compression": "^1.7.4",
