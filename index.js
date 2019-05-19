@@ -28,7 +28,7 @@ mongoose
     useFindAndModify: false
   })
   .then(() => console.log("🔥 Connected to mongodb!"))
-  .catch(err => console.log("☠️ Failed to connect to mongodb", err.message));
+  .catch(err => console.log(`☠️ Failed to connect to mongodb: [${dbUrl}]`, err.message));
 
 // 리스닝 시작
 const port = process.env.PORT || 8080;
