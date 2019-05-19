@@ -35,21 +35,23 @@ Footer{
   display: block;
   font-size: 1.2em;
   line-height: 1.2em;
+  width: 100%;
   background: none;
-  border: 1px solid rgba(0,0,0,0);
-  border-bottom: 1px solid black;
+  /* border: 1px solid rgba(0,0,0,0); */
+  /* border-bottom: 1px solid black; */
+  border: 1px solid #222;
   border-radius: .3em;
-  padding: .3em;
+  padding: .5em;
   transition: border .3s;
 }
 
 .input-group input:focus {
-  border: 1px solid orange;
+  border: 2px solid orange;
   outline: none;
 }
 
 .input-group textarea:focus {
-  border: 1px solid orange;
+  border: 2px solid orange;
   outline: none;
 }
 

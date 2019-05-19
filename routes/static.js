@@ -1,15 +1,19 @@
-const path = require('path');
-const express = require('express');
+const path = require("path");
+const express = require("express");
+const router = express.Router();
 
-module.exports = exports = function(app) {
-  let outputDir = path.join(
-    __dirname,
-    "../client",
-    process.env.NODE_ENV === "production" ? "build" : "public"
-  );
+const outputDir = path.join(
+  __dirname,
+  "../client",
+  process.env.NODE_ENV === "production" ? "build" : "public"
+);
 
-  app.use(express.static(outputDir));
-  app.use("/main", (req, res) => {
-    res.sendFile(path.join(outputDir, "index.html"));
-  });
-};
+router.get("*", (req, res, next) => {
+  if(req.path==='/'){
+    return res.sendFile(path.join(outputDir, "index.html"));
+  } else {
+    express.static(outputDir)(req,res,next);
+  }
+});
+
+module.exports = exports = router;

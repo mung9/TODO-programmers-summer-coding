@@ -30,8 +30,8 @@ export default function DateSelector({ date: dateObj, onChange, label }) {
             name="month"
             id="due-month"
             onChange={onChange}
-            value={month}
-            options={_.range(0, 12, 1)}
+            value={month+1}
+            options={_.range(1, 13, 1)}
           />
           <label htmlFor="due-month">월</label>
         </div>

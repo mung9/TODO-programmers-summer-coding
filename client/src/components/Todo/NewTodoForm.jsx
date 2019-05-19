@@ -55,7 +55,7 @@ export default class NewTodoForm extends Component {
         due.setFullYear(value);
         break;
       case "month":
-        due.setMonth(value);
+        due.setMonth(value-1);
         break;
       case "date":
         due.setDate(value);

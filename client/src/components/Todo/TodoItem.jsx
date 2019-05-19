@@ -66,7 +66,7 @@ export default class TodoItem extends Component {
             <>
               <h3 className="todo-title">{todo.title}</h3>
               {todo.due ? (
-                <p className="due">{`~${todo.due.getFullYear()}.${todo.due.getMonth()}.${todo.due.getDate()}`}</p>
+                <p className="due">{`~${todo.due.getFullYear()}.${todo.due.getMonth()+1}.${todo.due.getDate()}`}</p>
               ) : (
                 ""
               )}
@@ -197,8 +197,10 @@ function TodoItemTop({
 }
 
 function isOverdue(due) {
-  const endOfToday = new Date();
-  endOfToday.setDate(endOfToday.getDate() + 1);
+  const endOfTheDueDate = new Date(due);
+  endOfTheDueDate.setDate(endOfTheDueDate.getDate() + 1);
 
-  return due.getTime() < endOfToday.getTime();
+  const now = new Date();
+
+  return endOfTheDueDate.getTime() < now.getTime();
 }

@@ -8,7 +8,6 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   const todos = await Todo.find();
-  console.log('get todos',todos);
   return res.send(todos);
 });
 
