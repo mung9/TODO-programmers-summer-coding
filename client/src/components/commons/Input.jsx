@@ -61,6 +61,7 @@ Input.propTypes = {
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   type: PropTypes.string,
+  maxLength: PropTypes.number,
   onChange: PropTypes.func.isRequired
 };
 

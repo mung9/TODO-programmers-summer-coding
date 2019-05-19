@@ -81,7 +81,8 @@ Footer{
   cursor: pointer;
 }
 
-.fa-disabled {
+.fa-disabled,
+.disabled {
   opacity: .5;
   cursor: not-allowed;
 }

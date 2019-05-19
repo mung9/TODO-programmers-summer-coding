@@ -35,7 +35,6 @@ export default class Todo extends Component {
   handleAddTodo = async targetTodo => {
     try {
       const { data: todo } = await postTodo(targetTodo);
-      todo.due = todo.due ? new Date(todo.due) : null;
       const todos = [...this.state.todos];
       todos.push(todo);
       this.setState({ todos });
@@ -59,6 +58,7 @@ export default class Todo extends Component {
     todos[index] = todo;
     this.setState({ todos });
 
+    // Optimistic Update
     try {
       await putTodo(todo);
     } catch (error) {
@@ -82,6 +82,7 @@ export default class Todo extends Component {
 
     this.setState({ todos });
 
+    // Optimistic Update
     try {
       await putTodo(todo);
     } catch (error) {
@@ -107,6 +108,7 @@ export default class Todo extends Component {
     todos.splice(index, 1);
     this.setState({ todos });
 
+    // Optimistic Update
     try {
       await deleteTodo(targetTodo._id);
     } catch (error) {
@@ -126,6 +128,7 @@ export default class Todo extends Component {
     todos[index] = { ...targetTodo };
     this.setState({ todos });
 
+    // Optimistic Update
     try {
       await putTodo(todos[index]);
     } catch (error) {
@@ -133,10 +136,6 @@ export default class Todo extends Component {
       console.error(error);
       this.setState({ todos: originTodos });
     }
-  };
-
-  getTodos = () => {
-    return fakeTodos;
   };
 
   render() {

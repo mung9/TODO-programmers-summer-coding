@@ -10,7 +10,7 @@ import InputGroup from "../commons/InputGroup";
 const emptyTodo = {
   title: "",
   content: "",
-  due: null,  
+  due: null,
   done: false,
   priority: 1
 };
@@ -18,13 +18,12 @@ const emptyTodo = {
 export default class NewTodoForm extends Component {
   state = {
     newTodo: emptyTodo,
-    formOpened: false,
+    formOpened: false
   };
 
   handleDueToggle = () => {
-    const newTodo = {...this.state.newTodo};
+    const newTodo = { ...this.state.newTodo };
     newTodo.due = newTodo.due ? null : new Date();
-
     this.setState({ newTodo });
   };
 
@@ -46,7 +45,7 @@ export default class NewTodoForm extends Component {
   };
 
   handleSelectDate = ({ currentTarget }) => {
-    if(!newTodo.due) return;
+    if (!this.state.newTodo.due) return;
 
     const { name, value } = currentTarget;
     const newTodo = { ...this.state.newTodo };
@@ -89,16 +88,18 @@ export default class NewTodoForm extends Component {
     const { onAdd } = this.props;
     return this.state.formOpened ? (
       <>
-        <button
-          className="new-todo-control-btn"
-          onClick={() => {
+        <input
+          className={`new-todo-control-btn ${!newTodo.title ? "disabled" : ""}`}
+          type="submit"
+          form="new-todo-form"
+          onClick={(e) => {
+            e.preventDefault();
+            if (!newTodo.title) return;
             onAdd(newTodo);
             this.handleFormOpenedToggle();
           }}
-          disabled={!newTodo.title}
-        >
-          확인
-        </button>
+          value="확인"
+        />
         <button
           onClick={this.handleFormOpenedToggle}
           className="new-todo-control-btn"
@@ -126,14 +127,15 @@ export default class NewTodoForm extends Component {
   };
 
   renderForm = () => {
-    const { newTodo, enableDue } = this.state;
+    const { newTodo } = this.state;
     return (
-      <form onSubmit={() => onAdd(newTodo)} className="new-todo-form">
+      <form onSubmit={() => onAdd(newTodo)} id="new-todo-form">
         <Input
           name="title"
           value={newTodo.title}
           placeholder="새 TODO의 제목을 입력하세요."
           onChange={this.handleChange}
+          maxLength={50}
           label="제목"
           focus="true"
         />
@@ -142,15 +144,19 @@ export default class NewTodoForm extends Component {
           value={newTodo.content}
           placeholder="상세 내용을 입력하세요."
           onChange={this.handleChange}
+          maxLength={500}
           label="내용"
           type="textarea"
         />
         {this.renderPriorityInput()}
         <button
           className="new-todo-control-btn toggle-due-btn"
-          onClick={(e)=>{e.preventDefault(); this.handleDueToggle();}}
+          onClick={e => {
+            e.preventDefault();
+            this.handleDueToggle();
+          }}
         >
-          {enableDue ? "기한 필요 없어요" : "기한을 둘 거에요 ⏰"}
+          {newTodo.due ? "기한 필요 없어요" : "기한을 둘 거에요 ⏰"}
         </button>
         {newTodo.due ? (
           <DateSelector

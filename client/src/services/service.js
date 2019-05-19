@@ -9,7 +9,7 @@ axios.interceptors.response.use(null, function(error) {
     error.response.status < 500;
   if (!expected) {
     // Log exception using somthing like sentry.io
-    alert("An unexpected error occurred.");
+    alert("요청이 정상적으로 처리되지 않았습니다. 서버 문제일 수 있습니다.");
   }
 
   return Promise.reject(error);
@@ -17,21 +17,30 @@ axios.interceptors.response.use(null, function(error) {
 
 const endPoint = config.apiUrl + "/todo";
 
+function resolveDateFormat(todo) {
+  todo.due = todo.due ? new Date(todo.due) : null;
+}
+
 export async function getTodos() {
   const response = await axios.get(endPoint);
-  console.log(response.data);
-  response.data.forEach(todo => (todo.due = todo.due ? new Date(todo.due) : null));
+  response.data.forEach(todo => resolveDateFormat(todo));
   return response;
 }
 
 export async function postTodo(todo) {
-  return await axios.post(`${endPoint}`, todo);
+  const response = await axios.post(`${endPoint}`, todo);
+  resolveDateFormat(response.data);
+  return response;
 }
 
 export async function putTodo(todo) {
-  return await axios.put(`${endPoint}/${todo._id}`, todo);
+  const response = await axios.put(`${endPoint}/${todo._id}`, todo);
+  resolveDateFormat(response.data);
+  return response;
 }
 
 export async function deleteTodo(id) {
-  return await axios.delete(`${endPoint}/${id}`);
+  const response = await axios.delete(`${endPoint}/${id}`);
+  resolveDateFormat(response.data);
+  return response;
 }

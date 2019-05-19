@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import PriorityCircle from '../commons/PriorityCircle';
+import PriorityCircle from "../commons/PriorityCircle";
 
 export default class TodoItem extends Component {
   constructor(props) {
@@ -59,10 +59,18 @@ export default class TodoItem extends Component {
               name="title"
               value={todoBeingEdited.title}
               onChange={this.handleTodoChange}
-              maxLength={20}
+              maxLength={50}
+              onClick={e => e.stopPropagation()}
             />
           ) : (
-            <h3 className="todo-title">{todo.title}</h3>
+            <>
+              <h3 className="todo-title">{todo.title}</h3>
+              {todo.due ? (
+                <p className="due">{`~${todo.due.getFullYear()}.${todo.due.getMonth()}.${todo.due.getDate()}`}</p>
+              ) : (
+                ""
+              )}
+            </>
           )}
         </div>
         {/* Header End */}
@@ -75,9 +83,11 @@ export default class TodoItem extends Component {
               name="content"
               value={todoBeingEdited.content}
               onChange={this.handleTodoChange}
+              maxLength={500}
               ref={prop => {
                 this.textarea = prop;
               }}
+              onClick={e => e.stopPropagation()}
             />
           ) : (
             <p className="todo-content">{todo.content}</p>
@@ -188,7 +198,7 @@ function TodoItemTop({
 
 function isOverdue(due) {
   const endOfToday = new Date();
-  endOfToday.setDate(endOfToday.getDate()+1);
-  
-  return due.getTime() < (endOfToday).getTime();
+  endOfToday.setDate(endOfToday.getDate() + 1);
+
+  return due.getTime() < endOfToday.getTime();
 }
