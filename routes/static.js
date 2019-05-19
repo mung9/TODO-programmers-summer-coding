@@ -4,8 +4,7 @@ const router = express.Router();
 
 const outputDir = path.join(
   __dirname,
-  "../client",
-  process.env.NODE_ENV === "production" ? "build" : "public"
+  "../client/public"
 );
 
 router.get("*", (req, res, next) => {
