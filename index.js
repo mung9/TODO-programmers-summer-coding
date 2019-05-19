@@ -17,13 +17,18 @@ app.use(helmet());
 app.use(compression());
 
 // database 연결
+const dbUrl =
+  process.env.NODE_ENV === "production"
+    ? config.get("database.url")
+    : "mongodb://localhost/todo";
+
 mongoose
-  .connect(config.database.url, {
+  .connect(dbUrl, {
     useNewUrlParser: true,
     useFindAndModify: false
   })
   .then(() => console.log("🔥 Connected to mongodb!"))
-  .catch(err => console.log("Failed to connect to mongodb", err.message));
+  .catch(err => console.log("☠️ Failed to connect to mongodb", err.message));
 
 // 리스닝 시작
 const port = process.env.PORT || 8080;
