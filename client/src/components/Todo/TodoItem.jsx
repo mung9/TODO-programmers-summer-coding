@@ -171,7 +171,7 @@ function TodoItemTop({
         </a>
       </div>
       <div className="notification">
-        {isOverdue(todo.due) && !todo.done ? (
+        {todo.due && isOverdue(todo.due) && !todo.done ? (
           <FontAwesomeIcon icon="exclamation-triangle" className="warning" />
         ) : (
           ""
@@ -187,6 +187,8 @@ function TodoItemTop({
 }
 
 function isOverdue(due) {
-  const today = new Date();
-  return due.getTime() < today.getTime();
+  const endOfToday = new Date();
+  endOfToday.setDate(endOfToday.getDate()+1);
+  
+  return due.getTime() < (endOfToday).getTime();
 }

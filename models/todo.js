@@ -47,8 +47,8 @@ function validate(todo) {
   const schema = {
     _id: Joi.objectId(),
     title: Joi.string().min(1).max(50).required(),
-    content: Joi.string().max(100).default(''),
-    due: Joi.date(),
+    content: Joi.string().max(100).allow(''),
+    due: Joi.date().allow(null),
     priority: Joi.number().default(1),
     done: Joi.boolean().default(false),
     regDate: Joi.date().default(Date.now()),

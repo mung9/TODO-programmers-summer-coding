@@ -10,7 +10,12 @@
 */
 
 import React, { Component } from "react";
-import { getTodos, postTodo, putTodo, deleteTodo } from "../../services/service";
+import {
+  getTodos,
+  postTodo,
+  putTodo,
+  deleteTodo
+} from "../../services/service";
 import TodoList from "./TodoList";
 import { nextPriorityOf } from "../commons/priority";
 import NewTodoForm from "./NewTodoForm";
@@ -23,14 +28,14 @@ export default class Todo extends Component {
   };
 
   async componentDidMount() {
-    const {data : todos} = await getTodos();
+    const { data: todos } = await getTodos();
     this.setState({ todos });
   }
 
   handleAddTodo = async targetTodo => {
     try {
       const { data: todo } = await postTodo(targetTodo);
-      todo.due = new Date(todo.due);
+      todo.due = todo.due ? new Date(todo.due) : null;
       const todos = [...this.state.todos];
       todos.push(todo);
       this.setState({ todos });
@@ -59,20 +64,21 @@ export default class Todo extends Component {
     } catch (error) {
       console.error(error);
       alert(`[${targetTodo.title}] 수정을 실패했습니다.`);
-      this.setState({todos:originTodos});
+      this.setState({ todos: originTodos });
     }
   };
 
-  handlePriorityChange = targetTodo => {
-    const todos = [...this.state.todos];
+  handlePriorityChange = async targetTodo => {
+    const originTodos = this.state.todos;
+    const todos = [...originTodos];
     const index = todos.findIndex(todo => todo._id === targetTodo._id);
     if (index == -1) {
       return console.error(`${_id}를 id로 가지는 todo가 존재하지 않음.`);
     }
 
-    const newTodo = { ...todos[index] };
-    newTodo.priority = nextPriorityOf(newTodo.priority);
-    todos[index] = newTodo;
+    const todo = { ...todos[index] };
+    todo.priority = nextPriorityOf(todo.priority);
+    todos[index] = todo;
 
     this.setState({ todos });
 
@@ -80,8 +86,8 @@ export default class Todo extends Component {
       await putTodo(todo);
     } catch (error) {
       console.error(error);
-      alert(`[${targetTodo.title}] 수정을 실패했습니다.`);
-      this.setState({todos:originTodos});
+      alert(`[${todo.title}] 수정을 실패했습니다.`);
+      this.setState({ todos: originTodos });
     }
   };
 
@@ -106,7 +112,7 @@ export default class Todo extends Component {
     } catch (error) {
       console.error(error);
       alert(`[${targetTodo.title}] 삭제를 실패했습니다.`);
-      this.setState({todos:originTodos});
+      this.setState({ todos: originTodos });
     }
   };
 

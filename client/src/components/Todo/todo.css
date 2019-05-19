@@ -1,6 +1,7 @@
 .container {
   background-color: #efefef;
   padding: 5% 5%;
+  min-height: 82vh;
 }
 
 .container .new-todo,
@@ -23,9 +24,8 @@
 }
 
 .container .new-todo .new-todo-header .new-todo-label,
-.container .new-todo .new-todo-header .new-todo-control-btn {
+.container .new-todo .new-todo-control-btn {
   margin-right: 0.5em;
-
 }
 
 .container .new-todo .new-todo-header .new-todo-label {
@@ -35,8 +35,21 @@
   display: inline-block;
 }
 
-.container .new-todo .new-todo-header .new-todo-control-btn {
-    border: 1px solid black;
+.container .new-todo .new-todo-control-btn {
+  height: 2em;
+  width: fit-content;
+  padding-left: 1em;
+  padding-right: 1em;
+  border-radius: .5em;
+  border: 1px solid black;
+}
+
+.container .new-todo .new-todo-control-btn:hover {
+  background-color: rgb(212, 255, 212);
+}
+
+.container .new-todo .toggle-due-btn {
+  margin-bottom: 1em;
 }
 
 .container .new-todo #new-todo-title {
@@ -126,6 +139,7 @@
   word-wrap: normal;
   font-size: 1em;
   line-height: 1.6em;
+  min-height: 1.6em;
   width: 100%;
   max-width: 100%;
   overflow-wrap: normal;

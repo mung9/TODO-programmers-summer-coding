@@ -3,7 +3,7 @@ Header {
   justify-content: center;
   align-items: center;
   background-color: white;
-  height: 80px;
+  height: 6em;
 }
 
 .header-logo {
@@ -15,7 +15,7 @@ Header {
 
 Footer{
   background-color: #444;
-  height: 80px;
+  height: 6em;
 }
 
 .input-group {
@@ -43,16 +43,9 @@ Footer{
   transition: border .3s;
 }
 
-.input-group input {
-  
-}
-
 .input-group input:focus {
   border: 1px solid orange;
   outline: none;
-}
-
-.input-group textarea{
 }
 
 .input-group textarea:focus {
@@ -102,6 +95,6 @@ Footer{
 }
 
 .priority.priority0 {
-  color: black;
+  color: #666;
 }
 

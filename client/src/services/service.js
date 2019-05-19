@@ -19,7 +19,8 @@ const endPoint = config.apiUrl + "/todo";
 
 export async function getTodos() {
   const response = await axios.get(endPoint);
-  response.data.forEach(todo => (todo.due = new Date(todo.due)));
+  console.log(response.data);
+  response.data.forEach(todo => (todo.due = todo.due ? new Date(todo.due) : null));
   return response;
 }
 
@@ -28,7 +29,6 @@ export async function postTodo(todo) {
 }
 
 export async function putTodo(todo) {
-  console.log(todo);
   return await axios.put(`${endPoint}/${todo._id}`, todo);
 }
 
