@@ -5,7 +5,9 @@ const outputPath = __dirname + '/public';
 
 module.exports = {
   entry: ['babel-polyfill', __dirname + '/src/index.jsx'],
-  
+  node: {
+    fs: 'empty'
+  },
   module: {
     rules: [
       {
@@ -42,7 +44,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "[name].css",
       chunkFilename: "[id].css"
-    })
+    }),
   ],
   resolve: {
     extensions: ['.js', '.jsx']

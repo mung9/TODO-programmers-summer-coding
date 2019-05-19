@@ -1,4 +1,7 @@
 node_modules/
-# public/
+public/
+build/
 
 package-lock.json
+
+.env*

@@ -1,5 +1,4 @@
 import axios from "axios";
-import config from "../../config.json";
 
 // 5xx 상태에 대한 에러 핸들링
 axios.interceptors.response.use(null, function(error) {
@@ -15,7 +14,7 @@ axios.interceptors.response.use(null, function(error) {
   return Promise.reject(error);
 });
 
-const endPoint = config.apiUrl + "/todo";
+const endPoint = process.env.API_URI + "/todo";
 
 function resolveDateFormat(todo) {
   todo.due = todo.due ? new Date(todo.due) : null;

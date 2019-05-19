@@ -1,10 +1,17 @@
 const merge = require("webpack-merge");
 const common = require("./webpack.common");
+const Dotenv = require('dotenv-webpack');
 
 module.exports = merge(common, {
   output: {
     path: __dirname+'/public',
     filename: '[name].bundle.js'
   },
-  mode: "development"
+  plugins:[
+    new Dotenv({
+      path: './.env.development'
+    })
+  ],
+  mode: "development",
+  watch: true
 });
