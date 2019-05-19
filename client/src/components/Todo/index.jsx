@@ -28,7 +28,8 @@ export default class Todo extends Component {
   };
 
   async componentDidMount() {
-    const { data: todos } = await getTodos();
+    let { data: todos } = await getTodos();
+    todos = _.orderBy(todos, ['priority', "regDate"]).reverse();
     this.setState({ todos });
   }
 

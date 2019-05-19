@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import Input from '../commons/Input';
+
 import PriorityCircle from "../commons/PriorityCircle";
 
 export default class TodoItem extends Component {
@@ -53,15 +55,16 @@ export default class TodoItem extends Component {
         {/* Header Begin */}
         <div className="content-header">
           {todoBeingEdited ? (
-            <input
-              className="input-title"
-              type="text"
-              name="title"
-              value={todoBeingEdited.title}
-              onChange={this.handleTodoChange}
-              maxLength={50}
-              onClick={e => e.stopPropagation()}
-            />
+            <Input
+            name="title"
+            value={todoBeingEdited.title}
+            placeholder="새 TODO의 제목을 입력하세요."
+            onChange={this.handleTodoChange}
+            maxLength={50}
+            focus="true"
+            label="제목"
+            onClick={e => e.stopPropagation()}
+          />
           ) : (
             <>
               <h3 className="todo-title">{todo.title}</h3>
@@ -77,18 +80,16 @@ export default class TodoItem extends Component {
         {/* Body Begin */}
         <div className="content-body">
           {todoBeingEdited ? (
-            <textarea
-              className="input-content"
-              type="text"
-              name="content"
-              value={todoBeingEdited.content}
-              onChange={this.handleTodoChange}
-              maxLength={500}
-              ref={prop => {
-                this.textarea = prop;
-              }}
-              onClick={e => e.stopPropagation()}
-            />
+            <Input
+            name="content"
+            value={todoBeingEdited.content}
+            placeholder="상세 내용을 입력하세요."
+            onChange={this.handleTodoChange}
+            maxLength={500}
+            type="textarea"
+            label="내용"
+            onClick={e => e.stopPropagation()}
+          />
           ) : (
             <p className="todo-content">{todo.content}</p>
           )}
