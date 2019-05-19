@@ -162,5 +162,6 @@
 
 .todo-list .todo-item.done .content .content-header .todo-title::after {
   content: " ✔ ";
+  color: red;
   font-size: 1em;
 }
