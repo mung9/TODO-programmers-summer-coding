@@ -7,6 +7,16 @@ const compression = require("compression");
 const mongoose = require("mongoose");
 const config = require("config");
 
+process.on('uncaughtException', (ex) => {
+  console.error(ex);
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (ex) => {
+  console.error(ex);
+  process.exit(1);
+});
+
 app.use(cors());
 app.use(express.json());
 
@@ -27,7 +37,7 @@ mongoose
     useNewUrlParser: true,
     useFindAndModify: false
   })
-  .then(() => console.log("🔥 Connected to mongodb!"))
+  .then(() => console.log("🔥 Connected to mongodb!",`[${dbUrl}]`))
   .catch(err => console.log(`☠️ Failed to connect to mongodb: [${dbUrl}]`, err.message));
 
 // 리스닝 시작
