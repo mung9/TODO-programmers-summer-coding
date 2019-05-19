@@ -1,5 +1,5 @@
 {
-  "name": "ProgrammersInternship",
+  "name": "todo",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "client": "npm start --prefix client",
     "server": "nodemon index.js",
     "install-client": "npm i --prefix client",
-    "start": "node index.js"
+    "start": "npm run install-client && npm run build --prefix client && node index.js"
   },
   "engines": {
     "node": "11.14.0"
@@ -17,7 +17,6 @@
   "license": "ISC",
   "dependencies": {
     "compression": "^1.7.4",
-    "concurrently": "^4.1.0",
     "config": "^3.1.0",
     "cors": "^2.8.5",
     "express": "^4.16.4",

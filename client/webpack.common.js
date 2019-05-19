@@ -5,10 +5,7 @@ const outputPath = __dirname + '/public';
 
 module.exports = {
   entry: ['babel-polyfill', __dirname + '/src/index.jsx'],
-  output: {
-    path: outputPath,
-    filename: 'bundle.js'
-  },
+  
   module: {
     rules: [
       {
