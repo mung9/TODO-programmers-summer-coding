@@ -12,6 +12,12 @@
   flex-wrap: wrap;
 }
 
+.todo-list.empty-todo-list span{
+  margin: auto;
+  line-height: 4em;
+  font-size: 7em;
+}
+
 @media (max-width: 767px) {
   .container .new-todo,
   .todo-list {

@@ -11,7 +11,6 @@ a:visited {color:none;text-decoration:none;}
 a:active {color:none;text-decoration:none;}
 a:hover {color:none;text-decoration:none;}
 body,table,th,td,input,select,textarea,div {
-font-family: "verdana";
 font-size: 12px;
 color: #333;
 font-style: normal;
@@ -26,5 +25,6 @@ li {
 }
 
 * {
+  font-family: "verdana";
   box-sizing: border-box;
 }

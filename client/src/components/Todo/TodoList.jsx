@@ -10,6 +10,12 @@ export default function TodoList({
   onEdit,
   onPriorityChange,
 }) {
+  if(todos.length===0) {
+    return (
+      <div className="todo-list empty-todo-list"><span>🙂 할 일이 없네요! 🙃</span></div>
+    );
+  }
+
   return (
     <ul className="todo-list">
       {todos.map(todo => (
