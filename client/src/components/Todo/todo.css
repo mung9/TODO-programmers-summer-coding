@@ -271,8 +271,10 @@ input[type="submit"] {
 }
 
 .fixed-dashboard-content-btn {
-  border: 1px solid #444;
+  /* border: 1px solid #444; */
   padding: 0.5em;
-  background-color: #eee;
+  background-color: rgb(255, 210, 210);
+  color: black;
   width: max-content;
+  border-radius: 1em;
 }

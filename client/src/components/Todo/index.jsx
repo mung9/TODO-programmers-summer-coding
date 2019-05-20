@@ -101,6 +101,37 @@ export default class Todo extends Component {
     }
   };
 
+  handleDeleteDone = async () => {
+    const originTodos = this.state.todos;
+    const todos = [];
+    const targetTodos = [];
+    originTodos.forEach((todo)=>{
+      todo.done? targetTodos.push(todo) : todos.push(todo);
+    });
+
+    if (targetTodos.length === 0) return;
+
+    const yes = window.confirm(
+      `${targetTodos.length}개의 완료된 작업을 정말 삭제하시겠습니까?`
+    );
+    if (!yes) return;
+
+    this.setState({ todos });
+
+    // Optimistic Update
+    try {
+      await Promise.all(
+        targetTodos.map(async todo => {
+          await deleteTodo(todo._id);
+        })
+      );
+    } catch (error) {
+      console.error(error);
+      alert(`완료한 할 일을 삭제하지 못했습니다.`);
+      this.setState({ todos: originTodos });
+    }
+  };
+
   handleDelete = async targetTodo => {
     const yes = window.confirm(
       `[${targetTodo.title}] 를 정말 삭제하시겠습니까?`
@@ -163,13 +194,14 @@ export default class Todo extends Component {
           todos={todos}
           open={dashboardOpen}
           onToggleDashboard={this.handleToggleDashboard}
+          onDeleteDone={this.handleDeleteDone}
         />
       </section>
     );
   }
 }
 
-function FixedDashboard({ todos, open, onToggleDashboard }) {
+function FixedDashboard({ todos, open, onToggleDashboard, onDeleteDone }) {
   const renderProp = function(name, label, value) {
     return (
       <p className={`prop ${name}`}>
@@ -202,7 +234,9 @@ function FixedDashboard({ todos, open, onToggleDashboard }) {
           {renderProp("done", "완료 한 일", numOfTodosDone)}
           {renderProp("overdue", "기한 지난 일", numOfOverdueTodos)}
         </div>
-        <button className="fixed-dashboard-content-btn">완료된 작업 삭제</button>
+        <button className="fixed-dashboard-content-btn" onClick={(e)=>{onDeleteDone(); e.stopPropagation()}}>
+          완료된 작업 삭제
+        </button>
       </div>
     </div>
   );
