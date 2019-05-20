@@ -228,9 +228,7 @@ input[type="submit"] {
   font-size: 1em;
 }
 
-.fixed-dashboard {
-  background-color: #f9f9f9;
-  border: 1px solid black;
+.fixed-dashboard{
   display: flex;
   position: fixed;
   right: 2em;
@@ -238,31 +236,36 @@ input[type="submit"] {
   transition: transform .5s;
 }
 
-.fixed-dashboard.open {
-
+.fixed-dashboard .fixed-dashboard-content{
+  background-color: #f9f9f9;
+  border: 1px solid black;
+  padding: .5em;
 }
 
 .fixed-dashboard.closed {
-  transform: translateX(100%);
+  transform: translateX(89%);
 }
 
 .fixed-dashboard .toggle-btn{
   flex: 1;
-  height: 4em;
+  font-size: 2em;
+  height: 2em;
+  width: 2em;
   color: white;
   font-weight: bold;
   background-color: rgb(255, 142, 142);
-  padding: 1em;
-  border-radius: 5em;
-  transform: translateX(-5em);
-  /* position: relative; */
-  /* right: 3em; */
+  border-radius: 6em;
+  position: relative;
+  right: 10%;
+  transition: transform .5s;
 }
 
-.fixed-dashboard .fixed-dashboard-content {
-  padding: .5em;
-  width: fit-content;
-  flex: 3;
+.fixed-dashboard .toggle-btn:focus{
+  outline: none;
+}
+
+.fixed-dashboard.closed .toggle-btn {
+  transform: rotate(180deg);
 }
 
 .fixed-dashboard .fixed-dashboard-content .props {

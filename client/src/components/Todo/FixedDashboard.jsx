@@ -1,7 +1,13 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 import { isOverdue } from "../../util/date";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default function FixedDashboard({ todos, open, onToggleDashboard, onDeleteDone }) {
+export default function FixedDashboard({
+  todos,
+  open,
+  onToggleDashboard,
+  onDeleteDone
+}) {
   const renderProp = function(name, label, value) {
     return (
       <p className={`prop ${name}`}>
@@ -27,14 +33,23 @@ export default function FixedDashboard({ todos, open, onToggleDashboard, onDelet
       className={`fixed-dashboard ${open ? "open" : "closed"}`}
       onClick={onToggleDashboard}
     >
-      <button className="toggle-btn">{open ? ">>" : "<<"}</button>
+      <FontAwesomeIcon
+        className="toggle-btn clickable"
+        icon="arrow-circle-right"
+      />
       <div className="fixed-dashboard-content">
         <div className="props">
           {renderProp("total", "총 할 일", numOfTodos)}
           {renderProp("done", "완료 한 일", numOfTodosDone)}
           {renderProp("overdue", "기한 지난 일", numOfOverdueTodos)}
         </div>
-        <button className="fixed-dashboard-content-btn" onClick={(e)=>{onDeleteDone(); e.stopPropagation()}}>
+        <button
+          className="fixed-dashboard-content-btn"
+          onClick={e => {
+            onDeleteDone();
+            e.stopPropagation();
+          }}
+        >
           완료된 작업 삭제
         </button>
       </div>
