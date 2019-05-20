@@ -33,9 +33,7 @@ $ npm --version
 ```
 
 ### MongoDB (4.x)
-MongoDB는 [여기](https://www.mongodb.com/download-center/community)에서 설치할 수 있습니다.
-아래의 명령어를 통해 node와 npm이 설치되었음을 확인합니다.
-npm은 node를 설치할 때 함께 설치됩니다.
+MongoDB는 [여기](https://www.mongodb.com/download-center/community)에서 설치할 수 있습니다. 혹은 [여기](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/)에서 명령창을 통해 설치할 수 있습니다.
 ```shell
 $ mongod --version
 db version v4.0.6
@@ -52,6 +50,7 @@ $ cd directory/path/you/want
 $ git clone https://github.com/mung9/TODO-programmers-summer-coding.git
 ```
 
+### 서버 빌드 종속성 설치
 프로젝트의 루트 디렉토리로 이동하여 아래 명령어를 실행합니다. 
 서버 구동에 필요한 패키지들을 자동으로 설치해줍니다.
 ```shell
@@ -59,61 +58,36 @@ $ cd TODO-programmers-summer-coding
 $ npm install
 ```
 
+### 클라이언트 빌드
+`client` 디렉토리로 이동하여 클라이언트 애플리케이션 빌드에 필요한 패키지를 자동으로 설치합니다.
 ```shell
+$ cd client
+$ npm i
 ```
 
-### 클라이언트 종속성 설치
-이 단계는 React로 작성된 클라이언트 소스코드를 변경하여 실행하고 싶은 경우에만 필요합니다. 해당되지 않을 경우 건너뛰어도 무방합니다.
-아래 명령어를 입력하여 React 애플리케이션 빌드에 필요한 패키지를 자동으로 설치합니다.
+프로젝트의 루트 디렉토리로 돌아와서 아래 명령어를 입력하여 클라이언트 애플리케이션을 빌드합니다. `client/public` 디렉토리에 파일이 생성됩니다.
 ```shell
-$ npm install --prefix client
+$ npm run client
 ```
 
+### MongoDB 실행
+별도의 터미널 창에서 다음 명령을 실행하여 mongodb를 실행합니다.
+```shell
+$ mongod
+```
 
-### Configure app
+### 서버 설정
+기본 동작으로 서버의 포트는 8080으로 할당됩니다.
+환경변수 `PORT`를 설정하여 변경할 수 있습니다.
 
-Copy `config.sample.json` to `config.json` then edit it with the url where you have setup:
+### 서버 시작
+이제, 서버를 실행할 수 있습니다.
+```shell
+$ npm run server
+```
 
-- backend api
-- oauth like endpoint for auth
-- development
-
----
-## 서버 시작
-
-### Development Mode
-
-    $ npm start
-
-### Production Mode
-
-    $ npm run build
-
----
-
-## 언어 & 도구
-
-### HTML
-
-- [Jade](http://jade-lang.com/) for some templating.
-
-### JavaScript
-
-- [JSHint](http://www.jshint.com/docs/) is used to prevent JavaScript error.
-- [JSCS](https://npmjs.org/package/jscs) is used to check coding conventions.
-- [Browserify](http://browserify.org/) to handle allow us to write our client-side scripts with [es6 syntax](http://es6.github.io/) thanks to [es6ify](https://github.com/thlorenz/es6ify).
-- [React](http://facebook.github.io/react) is used for UI.
-
-### CSS
-
-- [cssnext](http://cssnext.putaindecode.io) is used to write futureproof CSS for CSS vendor prefix under the hood).
-
-_Autoprefixer_ is included and use [caniuse.com](http://caniuse.com/) database to avoid outdated prefixes. _You can forget CSS prefixes NOW._
-
-### Static server with Livereload
-
-The app embed for development a static connect server with livereload plugged.
-So each time you start the app, you get automatic refresh in the browser whenever you update a file.
+### 실행 결과 확인
+인터넷 브라우저에서 `localhost:{PORT}` (예: `localhost:8080`)로 접속하여 확인합니다.
 
 <!-- Markdown link & img dfn's -->
 [npm-image]: https://img.shields.io/npm/v/datadog-metrics.svg?style=flat-square
