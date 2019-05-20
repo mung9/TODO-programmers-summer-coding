@@ -20,6 +20,8 @@ import TodoList from "./TodoList";
 import { nextPriorityOf } from "../commons/priority";
 import NewTodoForm from "./NewTodoForm";
 
+import { isOverdue } from "../../util/date";
+
 import "./todo.css";
 
 export default class Todo extends Component {
@@ -29,7 +31,7 @@ export default class Todo extends Component {
 
   async componentDidMount() {
     let { data: todos } = await getTodos();
-    todos = _.orderBy(todos, ['priority', "regDate"]).reverse();
+    todos = _.orderBy(todos, ["priority", "regDate"]).reverse();
     this.setState({ todos });
   }
 
@@ -151,16 +153,39 @@ export default class Todo extends Component {
           onPriorityChange={this.handlePriorityChange}
           onEdit={this.handleEdit}
         />
-        <FixedNavigation/>
+        <FixedDashboard todos={todos} />
       </section>
     );
   }
 }
 
-function FixedNavigation(){
+function FixedDashboard({ todos }) {
+  const renderProp = function(name, label, value) {
+    return (
+      <p className={`prop ${name}`}>
+        <span className="prop-name">{label}</span>
+        <span className="prop-value">{value}</span>
+      </p>
+    );
+  };
+
+  let numOfOverdueTodos = 0;
+  let numOfTodosDone = 0;
+  todos.forEach(todo => {
+    if (todo.done) {
+      ++numOfTodosDone;
+    } else if (todo.due && isOverdue(todo.due)) {
+      ++numOfOverdueTodos;
+    }
+  });
+  const numOfTodos = todos.length;
+
   return (
-    <div className="fixed-nav">
-      <button className='fixed-nav-btn'>완료된 작업 삭제</button>
+    <div className="fixed-dashboard">
+      {renderProp("total", "총 할 일", numOfTodos)}
+      {renderProp("done", "완료 한 일", numOfTodosDone)}
+      {renderProp("overdue", "기한 지난 일", numOfOverdueTodos)}
+      <button className="fixed-dashboard-btn">완료된 작업 삭제</button>
     </div>
   );
 }

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Input from "../commons/Input";
+import {isOverdue} from '../../util/date';
 
 import PriorityCircle from "../commons/PriorityCircle";
 
@@ -214,13 +215,4 @@ function TodoItemTop({
       </div>
     </div>
   );
-}
-
-function isOverdue(due) {
-  const endOfTheDueDate = new Date(due);
-  endOfTheDueDate.setDate(endOfTheDueDate.getDate() + 1);
-
-  const now = new Date();
-
-  return endOfTheDueDate.getTime() < now.getTime();
 }
