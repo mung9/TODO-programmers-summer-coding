@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { isOverdue } from "../../util/date";
 
 export default function FixedDashboard({ todos, open, onToggleDashboard, onDeleteDone }) {
   const renderProp = function(name, label, value) {

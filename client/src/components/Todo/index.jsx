@@ -21,8 +21,6 @@ import FixedDashboard from './FixedDashboard';
 import { nextPriorityOf } from "../commons/priority";
 import NewTodoForm from "./NewTodoForm";
 
-import { isOverdue } from "../../util/date";
-
 import "./todo.css";
 
 export default class Todo extends Component {
