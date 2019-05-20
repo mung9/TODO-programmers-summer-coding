@@ -2,6 +2,10 @@ import axios from "axios";
 
 // 5xx 상태에 대한 에러 핸들링
 axios.interceptors.response.use(null, function(error) {
+  const manyRequest = error.response.status ===429;
+  if(manyRequest) {
+    alert('너무 많은 요청을 하셨네요. 혹시 악의적인 의도가 있었던건 아닌가요?');
+  }
   const expected =
     error.response &&
     error.response.status >= 400 &&
