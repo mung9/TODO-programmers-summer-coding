@@ -1,4 +1,4 @@
-# TODO
+# TODO-programmers-summer-coding
 > 프로그래머스 2019 섬머코딩 과제
 
 ![node Version][node-image] ![npm Version][npm-image]
@@ -95,8 +95,3 @@ $ npm start
 <!-- Markdown link & img dfn's -->
 [node-image]: https://img.shields.io/badge/node-10.15.3-green.svg
 [npm-image]: https://img.shields.io/badge/npm-6.4.1-red.svg
-[npm-url]: https://npmjs.org/package/datadog-metrics
-[npm-downloads]: https://img.shields.io/npm/dm/datadog-metrics.svg?style=flat-square
-[travis-image]: https://img.shields.io/travis/dbader/node-datadog-metrics/master.svg?style=flat-square
-[travis-url]: https://travis-ci.org/dbader/node-datadog-metrics
-[wiki]: https://github.com/yourname/yourproject/wiki
