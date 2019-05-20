@@ -12,10 +12,14 @@
   flex-wrap: wrap;
 }
 
+.todo-list.empty-todo-list {
+  margin-top: 20vh;
+}
+
 .todo-list.empty-todo-list span{
   margin: auto;
-  line-height: 4em;
-  font-size: 7em;
+  line-height: 1em;
+  font-size: 2em;
 }
 
 @media (max-width: 767px) {
@@ -239,15 +243,20 @@ input[type="submit"] {
 }
 
 .fixed-dashboard.closed {
-  transform: translateX(90%);
+  transform: translateX(100%);
 }
 
 .fixed-dashboard .toggle-btn{
   flex: 1;
+  height: 4em;
+  color: white;
   font-weight: bold;
-  background-color: lightyellow;
-  padding-left: .3em;
-  padding-right: .3em;
+  background-color: rgb(255, 142, 142);
+  padding: 1em;
+  border-radius: 5em;
+  transform: translateX(-5em);
+  /* position: relative; */
+  /* right: 3em; */
 }
 
 .fixed-dashboard .fixed-dashboard-content {
