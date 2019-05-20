@@ -18,6 +18,7 @@ process.on('unhandledRejection', (ex) => {
 });
 
 app.use(cors());
+require('./middlewares/rateLimit')(app, '/api/todo', 60, 50); // 요청 횟수 제한: 1분에 50번
 app.use(express.json());
 
 require("./middlewares/routes")(app);

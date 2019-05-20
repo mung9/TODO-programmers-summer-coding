@@ -15,7 +15,9 @@
   "engines": {
     "node": "11.14.0"
   },
-  "keywords": ["todo"],
+  "keywords": [
+    "todo"
+  ],
   "author": "mung9",
   "license": "ISC",
   "dependencies": {
@@ -24,6 +26,7 @@
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "express-async-errors": "^3.1.1",
+    "express-rate-limit": "^3.5.1",
     "helmet": "^3.18.0",
     "joi": "^14.3.1",
     "joi-objectid": "^2.0.0",
