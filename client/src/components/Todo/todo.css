@@ -220,20 +220,49 @@ input[type="submit"] {
 
 .fixed-dashboard {
   background-color: #f9f9f9;
-  box-shadow: .1em .1em .5em .3em rgba(0,0,0,.4);
+  border: 1px solid black;
+  display: flex;
   position: fixed;
   right: 2em;
-  bottom: 2em;
-  /* border-radius: 1.9em; */
-  padding: 1em;
+  bottom: 4em;
+  transition: transform .5s;
+}
+
+.fixed-dashboard.open {
+
+}
+
+.fixed-dashboard.closed {
+  transform: translateX(95%);
+}
+
+.fixed-dashboard .toggle-btn{
+  flex: 1;
+  font-weight: bold;
+  background-color: lightyellow;
+  padding-left: .3em;
+  padding-right: .3em;
+}
+
+.fixed-dashboard .fixed-dashboard-content {
+  padding: .5em;
+  width: fit-content;
+  flex: 3;
+}
+
+.fixed-dashboard .fixed-dashboard-content .props {
 }
 
 .fixed-dashboard .prop {
   margin-bottom: .3em;
+  margin-right: 1em;
+  display: block;
+  width: max-content;
+  /* display: inline-block; */
 }
 
 .fixed-dashboard .prop .prop-name {
-  margin-right: .5em;
+  margin-right: .3em;
 }
 
 .fixed-dashboard .prop .prop-value {
@@ -241,8 +270,9 @@ input[type="submit"] {
   color: darkblue;
 }
 
-.fixed-dashboard-btn {
+.fixed-dashboard-content-btn {
   border: 1px solid #444;
   padding: 0.5em;
   background-color: #eee;
+  width: max-content;
 }

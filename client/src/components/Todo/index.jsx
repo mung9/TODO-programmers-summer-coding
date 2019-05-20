@@ -26,7 +26,8 @@ import "./todo.css";
 
 export default class Todo extends Component {
   state = {
-    todos: []
+    todos: [],
+    dashboardOpen: false
   };
 
   async componentDidMount() {
@@ -34,6 +35,11 @@ export default class Todo extends Component {
     todos = _.orderBy(todos, ["priority", "regDate"]).reverse();
     this.setState({ todos });
   }
+
+  handleToggleDashboard = () => {
+    const dashboardOpen = !this.state.dashboardOpen;
+    this.setState({ dashboardOpen });
+  };
 
   handleAddTodo = async targetTodo => {
     try {
@@ -142,7 +148,7 @@ export default class Todo extends Component {
   };
 
   render() {
-    const { todos } = this.state;
+    const { todos, dashboardOpen } = this.state;
     return (
       <section className="container">
         <NewTodoForm onAdd={this.handleAddTodo} />
@@ -153,13 +159,17 @@ export default class Todo extends Component {
           onPriorityChange={this.handlePriorityChange}
           onEdit={this.handleEdit}
         />
-        <FixedDashboard todos={todos} />
+        <FixedDashboard
+          todos={todos}
+          open={dashboardOpen}
+          onToggleDashboard={this.handleToggleDashboard}
+        />
       </section>
     );
   }
 }
 
-function FixedDashboard({ todos }) {
+function FixedDashboard({ todos, open, onToggleDashboard }) {
   const renderProp = function(name, label, value) {
     return (
       <p className={`prop ${name}`}>
@@ -181,11 +191,19 @@ function FixedDashboard({ todos }) {
   const numOfTodos = todos.length;
 
   return (
-    <div className="fixed-dashboard">
-      {renderProp("total", "총 할 일", numOfTodos)}
-      {renderProp("done", "완료 한 일", numOfTodosDone)}
-      {renderProp("overdue", "기한 지난 일", numOfOverdueTodos)}
-      <button className="fixed-dashboard-btn">완료된 작업 삭제</button>
+    <div
+      className={`fixed-dashboard ${open ? "open" : "closed"}`}
+      onClick={onToggleDashboard}
+    >
+      <button className="toggle-btn">{open ? ">>" : "<<"}</button>
+      <div className="fixed-dashboard-content">
+        <div className="props">
+          {renderProp("total", "총 할 일", numOfTodos)}
+          {renderProp("done", "완료 한 일", numOfTodosDone)}
+          {renderProp("overdue", "기한 지난 일", numOfOverdueTodos)}
+        </div>
+        <button className="fixed-dashboard-content-btn">완료된 작업 삭제</button>
+      </div>
     </div>
   );
 }
