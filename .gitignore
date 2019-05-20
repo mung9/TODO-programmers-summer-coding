@@ -6,4 +6,5 @@ package-lock.json
 
 .env*
 
-.txt
+*.txt
+.DS_Store
