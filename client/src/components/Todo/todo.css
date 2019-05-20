@@ -232,7 +232,7 @@ input[type="submit"] {
   display: flex;
   position: fixed;
   right: 2em;
-  bottom: 4em;
+  bottom: 3em;
   transition: transform .5s;
 }
 
@@ -256,6 +256,7 @@ input[type="submit"] {
   background-color: rgb(255, 142, 142);
   border-radius: 6em;
   position: relative;
+  top: 2.5em;
   right: 10%;
   transition: transform .5s;
 }
