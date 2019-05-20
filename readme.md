@@ -1,7 +1,7 @@
 # TODO
 > 프로그래머스 2019 섬머코딩 과제
 
-[![NPM Version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url]
+![node Version][node-image] ![npm Version][npm-image]
 
 
 프로그래머스 2019 섬머코딩 과제로 제출하는 프로젝트입니다.
@@ -93,7 +93,8 @@ $ npm start
 인터넷 브라우저에서 `localhost:{PORT}` (예: `localhost:8080`)로 접속하여 확인합니다.
 
 <!-- Markdown link & img dfn's -->
-[npm-image]: https://img.shields.io/npm/v/datadog-metrics.svg?style=flat-square
+[node-image]: https://img.shields.io/badge/node-10.15.3-green.svg
+[npm-image]: https://img.shields.io/badge/npm-6.4.1-red.svg
 [npm-url]: https://npmjs.org/package/datadog-metrics
 [npm-downloads]: https://img.shields.io/npm/dm/datadog-metrics.svg?style=flat-square
 [travis-image]: https://img.shields.io/travis/dbader/node-datadog-metrics/master.svg?style=flat-square
