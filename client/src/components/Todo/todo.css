@@ -35,6 +35,11 @@
   display: inline-block;
 }
 
+input[type='submit']{
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+
 .container .new-todo .new-todo-control-btn {
   height: 2em;
   width: fit-content;
@@ -94,14 +99,18 @@
   display: flex;
 }
 
-.todo-list .todo-item .todo-item-top .control-buttons {
+.todo-list .todo-item .todo-item-top .todo-item-control-buttons {
   flex: 1;
 }
 
-.todo-list .todo-item .todo-item-top .control-buttons svg {
-  color: #777;
+.todo-list .todo-item .todo-item-top .todo-item-control-buttons .todo-item-control-button {
+  color: #bbb;
   font-size: 1.5em;
   margin-right: 5px;
+}
+
+.todo-list .todo-item .todo-item-top .todo-item-control-buttons .todo-item-control-button:hover {
+  color:#555;
 }
 
 .todo-list .todo-item .todo-item-top .notification {

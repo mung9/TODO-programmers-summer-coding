@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import Input from '../commons/Input';
+import Input from "../commons/Input";
 
 import PriorityCircle from "../commons/PriorityCircle";
 
@@ -56,20 +56,21 @@ export default class TodoItem extends Component {
         <div className="content-header">
           {todoBeingEdited ? (
             <Input
-            name="title"
-            value={todoBeingEdited.title}
-            placeholder="새 TODO의 제목을 입력하세요."
-            onChange={this.handleTodoChange}
-            maxLength={50}
-            focus="true"
-            label="제목"
-            onClick={e => e.stopPropagation()}
-          />
+              name="title"
+              value={todoBeingEdited.title}
+              placeholder="새 TODO의 제목을 입력하세요."
+              onChange={this.handleTodoChange}
+              maxLength={50}
+              focus="true"
+              label="제목"
+              onClick={e => e.stopPropagation()}
+            />
           ) : (
             <>
               <h3 className="todo-title">{todo.title}</h3>
               {todo.due ? (
-                <p className="due">{`~${todo.due.getFullYear()}.${todo.due.getMonth()+1}.${todo.due.getDate()}`}</p>
+                <p className="due">{`~${todo.due.getFullYear()}.${todo.due.getMonth() +
+                  1}.${todo.due.getDate()}`}</p>
               ) : (
                 ""
               )}
@@ -81,15 +82,15 @@ export default class TodoItem extends Component {
         <div className="content-body">
           {todoBeingEdited ? (
             <Input
-            name="content"
-            value={todoBeingEdited.content}
-            placeholder="상세 내용을 입력하세요."
-            onChange={this.handleTodoChange}
-            maxLength={500}
-            type="textarea"
-            label="내용"
-            onClick={e => e.stopPropagation()}
-          />
+              name="content"
+              value={todoBeingEdited.content}
+              placeholder="상세 내용을 입력하세요."
+              onChange={this.handleTodoChange}
+              maxLength={500}
+              type="textarea"
+              label="내용"
+              onClick={e => e.stopPropagation()}
+            />
           ) : (
             <p className="todo-content">{todo.content}</p>
           )}
@@ -138,9 +139,10 @@ function TodoItemTop({
 }) {
   return (
     <div className="todo-item-top">
-      <div className="control-buttons">
+      <div className="todo-item-control-buttons">
         <a>
           <FontAwesomeIcon
+            className="todo-item-control-button"
             icon="trash"
             onClick={e => {
               onDelete(todo);
@@ -160,9 +162,12 @@ function TodoItemTop({
                   }
                   e.stopPropagation();
                 }}
-                className={todoBeingEdited.title ? "" : "fa-disabled"}
+                className={`todo-item-control-button ${
+                  todoBeingEdited.title ? "" : "fa-disabled"
+                }`}
               />
               <FontAwesomeIcon
+                className="todo-item-control-button"
                 icon="times"
                 onClick={e => {
                   onToggleEdit();
@@ -172,7 +177,8 @@ function TodoItemTop({
             </>
           ) : (
             <FontAwesomeIcon
-              icon={todoBeingEdited ? "check" : "pen"}
+              className="todo-item-control-button"
+              icon={"pen"}
               onClick={e => {
                 onToggleEdit();
                 e.stopPropagation();
@@ -183,7 +189,11 @@ function TodoItemTop({
       </div>
       <div className="notification">
         {todo.due && isOverdue(todo.due) && !todo.done ? (
-          <FontAwesomeIcon icon="exclamation-triangle" className="warning" />
+          <FontAwesomeIcon
+            className="todo-item-control-button"
+            icon="exclamation-triangle"
+            className="warning"
+          />
         ) : (
           ""
         )}
