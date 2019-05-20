@@ -151,7 +151,16 @@ export default class Todo extends Component {
           onPriorityChange={this.handlePriorityChange}
           onEdit={this.handleEdit}
         />
+        <FixedNavigation/>
       </section>
     );
   }
+}
+
+function FixedNavigation(){
+  return (
+    <div className="fixed-nav">
+      <button className='fixed-nav-btn'>완료된 작업 삭제</button>
+    </div>
+  );
 }

@@ -1,4 +1,4 @@
-Header {
+header {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,9 +13,14 @@ Header {
   display: inline-block;
 }
 
-Footer{
+footer{
+  text-align: center;
   background-color: #444;
   height: 6em;
+}
+
+footer .subtitle {
+  color: #eee;
 }
 
 .input-group {

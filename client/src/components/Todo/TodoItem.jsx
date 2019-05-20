@@ -50,6 +50,7 @@ export default class TodoItem extends Component {
   renderContent = () => {
     const { todoBeingEdited } = this.state;
     const { todo } = this.props;
+
     return (
       <div className="content">
         {/* Header Begin */}
@@ -69,7 +70,11 @@ export default class TodoItem extends Component {
             <>
               <h3 className="todo-title">{todo.title}</h3>
               {todo.due ? (
-                <p className="due">{`~${todo.due.getFullYear()}.${todo.due.getMonth() +
+                <p
+                  className={`due ${
+                    isOverdue(todo.due) && !todo.done ? "overdue" : ""
+                  }`}
+                >{`~${todo.due.getFullYear()}.${todo.due.getMonth() +
                   1}.${todo.due.getDate()}`}</p>
               ) : (
                 ""
@@ -150,9 +155,9 @@ function TodoItemTop({
             }}
           />
         </a>
-        <a>
-          {todoBeingEdited ? (
-            <>
+        {todoBeingEdited ? (
+          <>
+            <a>
               <FontAwesomeIcon
                 icon="check"
                 onClick={e => {
@@ -166,6 +171,8 @@ function TodoItemTop({
                   todoBeingEdited.title ? "" : "fa-disabled"
                 }`}
               />
+            </a>
+            <a>
               <FontAwesomeIcon
                 className="todo-item-control-button"
                 icon="times"
@@ -174,8 +181,10 @@ function TodoItemTop({
                   e.stopPropagation();
                 }}
               />
-            </>
-          ) : (
+            </a>
+          </>
+        ) : (
+          <a>
             <FontAwesomeIcon
               className="todo-item-control-button"
               icon={"pen"}
@@ -184,10 +193,15 @@ function TodoItemTop({
                 e.stopPropagation();
               }}
             />
-          )}
-        </a>
+          </a>
+        )}
       </div>
       <div className="notification">
+        <PriorityCircle
+          item={todo}
+          onPriorityChange={onPriorityChange}
+          showLabel={false}
+        />
         {todo.due && isOverdue(todo.due) && !todo.done ? (
           <FontAwesomeIcon
             className="todo-item-control-button"
@@ -197,11 +211,6 @@ function TodoItemTop({
         ) : (
           ""
         )}
-        <PriorityCircle
-          item={todo}
-          onPriorityChange={onPriorityChange}
-          showLabel={false}
-        />
       </div>
     </div>
   );
