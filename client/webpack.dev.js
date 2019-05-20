@@ -7,5 +7,5 @@ module.exports = merge(common, {
     filename: '[name].bundle.js'
   },
   mode: "development",
-  watch: true
+  // watch: true
 });

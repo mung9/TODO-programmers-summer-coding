@@ -5,10 +5,11 @@
   "main": "index.js",
   "homepage": "https://todo-2019-summer-coding.herokuapp.com",
   "scripts": {
-    "client": "npm start --prefix client",
-    "server": "nodemon index.js",
     "install-client": "npm i --prefix client",
+    "client-watch": "npm run start-watch --prefix client",
+    "client": "npm run start --prefix client",
     "start": "node index.js",
+    "start-watch": "nodemon index.js",
     "heroku-postbuild": "npm run install-client && npm run build --prefix client"
   },
   "engines": {
