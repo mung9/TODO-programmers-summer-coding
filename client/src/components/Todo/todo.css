@@ -233,7 +233,7 @@ input[type="submit"] {
 }
 
 .fixed-dashboard.closed {
-  transform: translateX(95%);
+  transform: translateX(90%);
 }
 
 .fixed-dashboard .toggle-btn{
