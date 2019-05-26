@@ -92,6 +92,8 @@ export function toggleDone(id, originalTodos) {
 
 export function deleteTodo(id, originalTodos) {
   return async dispatch => {
+    const result = confirm('정말로 삭제하시겠습니까?');
+    if(!result) return;
     dispatch({ type: DELETE_TODO, id });
     try {
       await todoService.deleteTodo(id);
