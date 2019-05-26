@@ -11,28 +11,37 @@
 
 import React, { Component } from "react";
 import {
-  getTodos,
-  postTodo,
-  putTodo,
-  deleteTodo
+  // getTodos,
+  // postTodo,
+  // putTodo,
+  // deleteTodo
 } from "../../services/service";
 import TodoList from "./TodoList";
-import FixedDashboard from './FixedDashboard';
-import { nextPriorityOf } from "../commons/priority";
+import FixedDashboard from "./FixedDashboard";
 import NewTodoForm from "./NewTodoForm";
+import { connect } from "react-redux";
+
+import {
+  getTodos,
+  postTodo,
+  editTodo,
+  deleteTodo,
+  printSomething,
+  nextPriority,
+  toggleDone
+} from "../../actions/todoActions";
 
 import "./todo.css";
 
-export default class Todo extends Component {
+class Todo extends Component {
   state = {
     todos: [],
     dashboardOpen: false
   };
 
-  async componentDidMount() {
-    let { data: todos } = await getTodos();
-    todos = _.orderBy(todos, ["priority", "regDate"]).reverse();
-    this.setState({ todos });
+  componentDidMount() {
+    this.props.onPrintSomething();
+    this.props.onGetTodos();
   }
 
   handleToggleDashboard = () => {
@@ -40,72 +49,24 @@ export default class Todo extends Component {
     this.setState({ dashboardOpen });
   };
 
-  handleAddTodo = async targetTodo => {
-    try {
-      const { data: todo } = await postTodo(targetTodo);
-      const todos = [...this.state.todos];
-      todos.push(todo);
-      this.setState({ todos });
-    } catch (error) {
-      console.error(error);
-      alert(`[${targetTodo.title}]를 추가하는데 실패했습니다.`);
-    }
+  handleAddTodo = targetTodo => {
+    this.props.onPostTodo(targetTodo);
   };
 
-  handleToggleDone = async targetTodo => {
-    const originTodos = this.state.todos;
-    const todos = [...originTodos];
-    const index = todos.findIndex(todo => todo._id === targetTodo._id);
-    if (index === -1) {
-      return console.error(`${_id}를 id로 가지는 todo가 존재하지 않음.`);
-    }
-
-    const todo = { ...todos[index] };
-    todo.done = !todo.done;
-
-    todos[index] = todo;
-    this.setState({ todos });
-
-    // Optimistic Update
-    try {
-      await putTodo(todo);
-    } catch (error) {
-      console.error(error);
-      alert(`[${targetTodo.title}] 수정을 실패했습니다.`);
-      this.setState({ todos: originTodos });
-    }
+  handleToggleDone = targetTodo => {
+    this.props.onToggleDone(targetTodo._id, this.props.todos);
   };
 
-  handlePriorityChange = async targetTodo => {
-    const originTodos = this.state.todos;
-    const todos = [...originTodos];
-    const index = todos.findIndex(todo => todo._id === targetTodo._id);
-    if (index == -1) {
-      return console.error(`${_id}를 id로 가지는 todo가 존재하지 않음.`);
-    }
-
-    const todo = { ...todos[index] };
-    todo.priority = nextPriorityOf(todo.priority);
-    todos[index] = todo;
-
-    this.setState({ todos });
-
-    // Optimistic Update
-    try {
-      await putTodo(todo);
-    } catch (error) {
-      console.error(error);
-      alert(`[${todo.title}] 수정을 실패했습니다.`);
-      this.setState({ todos: originTodos });
-    }
+  handlePriorityChange = targetTodo => {
+    this.props.onNextPriority(targetTodo._id, this.props.todos);
   };
 
   handleDeleteDone = async () => {
     const originTodos = this.state.todos;
     const todos = [];
     const targetTodos = [];
-    originTodos.forEach((todo)=>{
-      todo.done? targetTodos.push(todo) : todos.push(todo);
+    originTodos.forEach(todo => {
+      todo.done ? targetTodos.push(todo) : todos.push(todo);
     });
 
     if (targetTodos.length === 0) return;
@@ -137,44 +98,11 @@ export default class Todo extends Component {
     );
     if (!yes) return;
 
-    const originTodos = this.state.todos;
-    const todos = [...originTodos];
-    const index = todos.findIndex(todo => todo._id === targetTodo._id);
-    if (index === -1) {
-      return console.error(`${_id}를 id로 가지는 todo가 존재하지 않음.`);
-    }
-
-    todos.splice(index, 1);
-    this.setState({ todos });
-
-    // Optimistic Update
-    try {
-      await deleteTodo(targetTodo._id);
-    } catch (error) {
-      console.error(error);
-      alert(`[${targetTodo.title}] 삭제를 실패했습니다.`);
-      this.setState({ todos: originTodos });
-    }
+    this.props.onDeleteTodo(targetTodo._id, this.props.todos);
   };
 
-  handleEdit = async targetTodo => {
-    const originTodos = this.state.todos;
-    const todos = [...originTodos];
-    const index = todos.findIndex(todo => todo._id === targetTodo._id);
-    if (-1 === index)
-      return console.error(`${_id}를 id로 가지는 todo가 존재하지 않음.`);
-
-    todos[index] = { ...targetTodo };
-    this.setState({ todos });
-
-    // Optimistic Update
-    try {
-      await putTodo(todos[index]);
-    } catch (error) {
-      alert(`[${todos[index].title}]를 수정하는 도중 오류가 발생하였습니다.`);
-      console.error(error);
-      this.setState({ todos: originTodos });
-    }
+  handleEdit = targetTodo => {
+    this.props.onEditTodo(targetTodo, this.props.todos);
   };
 
   render() {
@@ -183,7 +111,7 @@ export default class Todo extends Component {
       <section className="container">
         <NewTodoForm onAdd={this.handleAddTodo} />
         <TodoList
-          todos={todos}
+          todos={this.props.todos}
           onToggleDone={this.handleToggleDone}
           onDelete={this.handleDelete}
           onPriorityChange={this.handlePriorityChange}
@@ -200,3 +128,26 @@ export default class Todo extends Component {
   }
 }
 
+const mapStateToProps = state => ({ todos: state.todos });
+
+const mapActionsToProps = {
+  onGetTodos: getTodos,
+  onEditTodo: editTodo,
+  onPostTodo: postTodo,
+  onDeleteTodo: deleteTodo,
+  onPrintSomething: printSomething,
+  onNextPriority: nextPriority,
+  onToggleDone: toggleDone
+};
+
+const mergeProps = (stateProps, dispatchProps, ownProps) => ({
+  ...stateProps,
+  ...dispatchProps,
+  ...ownProps
+});
+
+export default connect(
+  mapStateToProps,
+  mapActionsToProps,
+  mergeProps
+)(Todo);

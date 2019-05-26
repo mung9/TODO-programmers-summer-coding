@@ -2,7 +2,6 @@ const express = require("express");
 const _ = require("lodash");
 const { Todo, validateTodo } = require("../models/todo");
 const validateId = require("../models/id");
-const asyncMiddleware = require("../middlewares/asyncMiddleware");
 
 const router = express.Router();
 

@@ -12,9 +12,11 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPen, faTimes, faCircle, faExclamationTriangle, faCheck, faTrash, faArrowCircleRight} from '@fortawesome/free-solid-svg-icons';
 
+import {connect} from 'react-redux';
+
 library.add([faTimes, faPen, faCircle,faExclamationTriangle, faCheck, faTrash, faArrowCircleRight]);
 
-export default class App extends Component {
+class App extends Component {
   render() {
     return (
       <>
@@ -25,3 +27,6 @@ export default class App extends Component {
     );
   }
 }
+
+export default App;
+// export default connect()(App);
