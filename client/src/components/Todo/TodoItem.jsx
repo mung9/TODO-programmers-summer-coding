@@ -8,7 +8,13 @@ import { isOverdue } from "../../util/date";
 
 import PriorityCircle from "../commons/PriorityCircle";
 import TodoContent from "./TodoContent";
-import { deleteTodo, editTodo, nextPriority, toggleDone } from "../../actions/todoActions";
+import {
+  deleteTodo,
+  editTodo,
+  nextPriority,
+  toggleDone
+} from "../../actions/todoActions";
+import { copyFile } from "fs";
 
 class TodoItem extends Component {
   constructor(props) {
@@ -19,7 +25,7 @@ class TodoItem extends Component {
   }
 
   handleToggleEdit = () => {
-    const todoBeingEdited = this.state.todoBeingEdited ? null : this.props.todo;
+    const todoBeingEdited = this.state.todoBeingEdited ? null : {...this.props.todo};
     this.setState({ todoBeingEdited });
   };
 
@@ -34,10 +40,21 @@ class TodoItem extends Component {
       this.textarea.style.height = 0;
       this.textarea.style.height = this.textarea.scrollHeight + "px";
     }
+
+    console.log(prevProps.todo === this.props.todo);
+    if (this.state.todoBeingEdited && prevProps.todo !== this.props.todo) {
+      this.handleToggleEdit();
+    }
   }
 
   renderTop = () => {
-    const { todo, todos, onDeleteTodo, onNextPriority, onEditTodo } = this.props;
+    const {
+      todo,
+      todos,
+      onDeleteTodo,
+      onNextPriority,
+      onEditTodo
+    } = this.props;
     const { todoBeingEdited } = this.state;
     return (
       <TodoItemTop
@@ -45,7 +62,7 @@ class TodoItem extends Component {
         todos={todos}
         onDelete={onDeleteTodo}
         onPriorityChange={onNextPriority}
-        onToggleEdit={this.handleToggleEdit}  
+        onToggleEdit={this.handleToggleEdit}
         onEdit={onEditTodo}
         todoBeingEdited={todoBeingEdited}
       />
@@ -81,6 +98,72 @@ TodoItem.defaultProps = {
   todoBeingEdited: null
 };
 
+const DeleteButton = ({ todo, todos, onDelete }) => {
+  return (
+    <a>
+      <FontAwesomeIcon
+        className="todo-item-control-button"
+        icon="trash"
+        onClick={e => {
+          e.stopPropagation();
+          onDelete(todo._id, todos);
+        }}
+      />
+    </a>
+  );
+};
+
+const ControlButtonOnUsual = ({ onToggleEdit }) => {
+  return (
+    <a>
+      <FontAwesomeIcon
+        className="todo-item-control-button"
+        icon={"pen"}
+        onClick={e => {
+          onToggleEdit();
+          e.stopPropagation();
+        }}
+      />
+    </a>
+  );
+};
+
+const ControlButtonOnEdit = ({
+  todoBeingEdited,
+  todos,
+  onEdit,
+  onToggleEdit
+}) => {
+  return (
+    <>
+      <a>
+        <FontAwesomeIcon
+          icon="check"
+          onClick={e => {
+            if (todoBeingEdited.title) {
+              onEdit(todoBeingEdited, todos);
+            }
+            e.stopPropagation();
+          }}
+          className={`todo-item-control-button ${
+            todoBeingEdited.title ? "" : "fa-disabled"
+          }`}
+        />
+      </a>
+      <a>
+        <FontAwesomeIcon
+          className="todo-item-control-button"
+          icon="times"
+          onClick={e => {
+            onToggleEdit();
+            e.stopPropagation();
+          }}
+        />
+      </a>
+    </>
+  );
+};
+
 const TodoItemTop = ({
   todo,
   todos,
@@ -90,64 +173,26 @@ const TodoItemTop = ({
   onEdit,
   todoBeingEdited
 }) => {
+  // const controlBtnsOnEdit =
   return (
     <div className="todo-item-top">
       <div className="todo-item-control-buttons">
-        <a>
-          <FontAwesomeIcon
-            className="todo-item-control-button"
-            icon="trash"
-            onClick={e => {
-              e.stopPropagation();
-              onDelete(todo._id, todos);
-            }}
-          />
-        </a>
+        <DeleteButton todo={todo} todos={todos} onDelete={onDelete} />
         {todoBeingEdited ? (
-          <>
-            <a>
-              <FontAwesomeIcon
-                icon="check"
-                onClick={e => {
-                  if (todoBeingEdited.title) {
-                    onEdit(todoBeingEdited, todos);
-                    onToggleEdit();
-                  }
-                  e.stopPropagation();
-                }}
-                className={`todo-item-control-button ${
-                  todoBeingEdited.title ? "" : "fa-disabled"
-                }`}
-              />
-            </a>
-            <a>
-              <FontAwesomeIcon
-                className="todo-item-control-button"
-                icon="times"
-                onClick={e => {
-                  onToggleEdit();
-                  e.stopPropagation();
-                }}
-              />
-            </a>
-          </>
+          <ControlButtonOnEdit
+            todoBeingEdited={todoBeingEdited}
+            todos={todos}
+            onEdit={onEdit}
+            onToggleEdit={onToggleEdit}
+          />
         ) : (
-          <a>
-            <FontAwesomeIcon
-              className="todo-item-control-button"
-              icon={"pen"}
-              onClick={e => {
-                onToggleEdit();
-                e.stopPropagation();
-              }}
-            />
-          </a>
+          <ControlButtonOnUsual onToggleEdit={onToggleEdit}/>
         )}
       </div>
       <div className="notification">
         <PriorityCircle
           item={todo}
-          onPriorityChange={()=>onPriorityChange(todo._id, todos)}
+          onPriorityChange={() => onPriorityChange(todo._id, todos)}
           showLabel={false}
         />
         {todo.due && isOverdue(todo.due) && !todo.done ? (
@@ -171,7 +216,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   onDeleteTodo: (id, originalTodos) => dispatch(deleteTodo(id, originalTodos)),
   onEditTodo: (todo, originalTodos) => dispatch(editTodo(todo, originalTodos)),
-  onNextPriority: (id, originalTodos) => dispatch(nextPriority(id, originalTodos)),
+  onNextPriority: (id, originalTodos) =>
+    dispatch(nextPriority(id, originalTodos)),
   onToggleDone: (id, originalTodos) => dispatch(toggleDone(id, originalTodos))
 });
 
