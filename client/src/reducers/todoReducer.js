@@ -7,12 +7,10 @@ import {
   PUT_TODO_ERROR,
   DELETE_TODO,
   DELETE_TODO_ERROR,
-  UNDO,
-  PRINT_SOMETHING,
-  DELETE_DONE
+  DELETE_DONE,
+  DELETE_DONE_ERROR,
+  PRINT_SOMETHING
 } from "../actions/types";
-
-import { nextPriorityOf } from "../components/commons/priority";
 
 const defaultState = [];
 
@@ -45,7 +43,9 @@ export default function(todos = defaultState, action) {
         ? action.originalTodos
         : console.error("`originalTodos`필드가 없습니다.");
     case DELETE_TODO:
-      return todos.filter(todo => { return todo._id !== action.id});
+      return todos.filter(todo => {
+        return todo._id !== action.id;
+      });
     case DELETE_TODO_ERROR:
       alertAndLogError(action.error);
       return action.originalTodos
@@ -53,6 +53,11 @@ export default function(todos = defaultState, action) {
         : console.error("`originalTodos`필드가 없습니다.");
     case DELETE_DONE:
       return todos.filter(todo => !todo.done);
+    case DELETE_DONE_ERROR:
+      alertAndLogError(action.error);
+      return action.originalTodos
+        ? action.originalTodos
+        : console.error("`originalTodos`필드가 없습니다.");
     case PRINT_SOMETHING:
       console.log("PRINT_SOMETHING!!");
       return todos;

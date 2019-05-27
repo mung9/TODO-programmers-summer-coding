@@ -10,12 +10,11 @@
 */
 
 import React, { Component } from "react";
-import {
-  // getTodos,
-  // postTodo,
-  // putTodo,
-  // deleteTodo
-} from "../../services/service";
+import // getTodos,
+// postTodo,
+// putTodo,
+// deleteTodo
+"../../services/service";
 import TodoList from "./TodoList";
 import FixedDashboard from "./FixedDashboard";
 import NewTodoForm from "./NewTodoForm";
@@ -34,13 +33,7 @@ import {
 import "./todo.css";
 
 class Todo extends Component {
-  state = {
-    todos: [],
-    dashboardOpen: false
-  };
-
   componentDidMount() {
-    this.props.onPrintSomething();
     this.props.onGetTodos();
   }
 
@@ -62,7 +55,7 @@ class Todo extends Component {
   };
 
   handleDeleteDone = async () => {
-    const originTodos = this.state.todos;
+    const originTodos = this.props.todos;
     const todos = [];
     const targetTodos = [];
     originTodos.forEach(todo => {
@@ -106,23 +99,12 @@ class Todo extends Component {
   };
 
   render() {
-    const { todos, dashboardOpen } = this.state;
+    const { todos } = this.props;
     return (
       <section className="container">
         <NewTodoForm onAdd={this.handleAddTodo} />
-        <TodoList
-          todos={this.props.todos}
-          onToggleDone={this.handleToggleDone}
-          onDelete={this.handleDelete}
-          onPriorityChange={this.handlePriorityChange}
-          onEdit={this.handleEdit}
-        />
-        <FixedDashboard
-          todos={todos}
-          open={dashboardOpen}
-          onToggleDashboard={this.handleToggleDashboard}
-          onDeleteDone={this.handleDeleteDone}
-        />
+        <TodoList todos={todos} />
+        <FixedDashboard todos={todos} />
       </section>
     );
   }

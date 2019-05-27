@@ -22,9 +22,5 @@ export default function TodoList({ todos }) {
 }
 
 TodoList.propTypes = {
-  todos: PropTypes.array,
-  onToggleDone: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
-  onEdit: PropTypes.func.isRequired,
-  onPriorityChange: PropTypes.func.isRequired
+  todos: PropTypes.array
 };

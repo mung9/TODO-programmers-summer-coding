@@ -8,7 +8,9 @@ import {
   PUT_TODO_ERROR,
   DELETE_TODO_ERROR,
   GET_TODOS_ERROR,
-  POST_TODO_ERROR
+  POST_TODO_ERROR,
+  DELETE_DONE,
+  DELETE_DONE_ERROR
 } from "./types";
 
 import { nextPriorityOf } from "../components/commons/priority";
@@ -65,7 +67,7 @@ export function editTodo(todo, originalTodos) {
 export function nextPriority(id, originalTodos) {
   return async dispatch => {
     const todo = { ...originalTodos.find(t => t._id === id) };
-    todo.priority = nextPriority(todo.priority);
+    todo.priority = nextPriorityOf(todo.priority);
     dispatch({ type: PUT_TODO, todo });
     try {
       await todoService.putTodo(todo);
@@ -92,14 +94,34 @@ export function toggleDone(id, originalTodos) {
 
 export function deleteTodo(id, originalTodos) {
   return async dispatch => {
-    const result = confirm('정말로 삭제하시겠습니까?');
-    if(!result) return;
+    const result = confirm("정말로 삭제하시겠습니까?");
+    if (!result) return;
     dispatch({ type: DELETE_TODO, id });
     try {
       await todoService.deleteTodo(id);
     } catch (error) {
       error.alertMessage = `할 일을 삭제하지 못 했습니다.`;
       dispatch({ type: DELETE_TODO_ERROR, originalTodos, error });
+    }
+  };
+}
+
+export function deleteDone(originalTodos) {
+  return async dispatch => {
+    const result = confirm("완료된 할 일을 모두 삭제하시겠습니까?");
+    if (!result) return;
+
+    dispatch({ type: DELETE_DONE });
+    try {
+      console.log("todos:", originalTodos);
+      await Promise.all(
+        originalTodos
+          .filter(todo => todo.done)
+          .map(async todo => await todoService.deleteTodo(todo._id))
+      );
+    } catch (error) {
+      error.alertMessage = `완료된 할 일을 삭제하지 못 했습니다.`;
+      dispatch({ type: DELETE_DONE_ERROR, originalTodos, error });
     }
   };
 }
