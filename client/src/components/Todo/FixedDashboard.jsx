@@ -39,7 +39,7 @@ class FixedDashboard extends Component {
 
     return (
       <div
-        className={`fixed-dashboard ${open ? "open" : "closed"}`}
+        className={`fixed-dashboard ${this.state.open ? "open" : "closed"}`}
         onClick={this.handleToggleShow}
       >
         <FontAwesomeIcon
