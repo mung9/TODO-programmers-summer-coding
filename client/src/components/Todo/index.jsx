@@ -10,27 +10,14 @@
 */
 
 import React, { Component } from "react";
-import // getTodos,
-// postTodo,
-// putTodo,
-// deleteTodo
-"../../services/service";
 import TodoList from "./TodoList";
 import FixedDashboard from "./FixedDashboard";
 import NewTodoForm from "./NewTodoForm";
 import { connect } from "react-redux";
 
-import {
-  getTodos,
-  postTodo,
-  editTodo,
-  deleteTodo,
-  printSomething,
-  nextPriority,
-  toggleDone
-} from "../../actions/todoActions";
-
 import "./todo.css";
+
+import {getTodos} from '../../actions/todoActions';
 
 class Todo extends Component {
   componentDidMount() {
@@ -44,58 +31,6 @@ class Todo extends Component {
 
   handleAddTodo = targetTodo => {
     this.props.onPostTodo(targetTodo);
-  };
-
-  handleToggleDone = targetTodo => {
-    this.props.onToggleDone(targetTodo._id, this.props.todos);
-  };
-
-  handlePriorityChange = targetTodo => {
-    this.props.onNextPriority(targetTodo._id, this.props.todos);
-  };
-
-  handleDeleteDone = async () => {
-    const originTodos = this.props.todos;
-    const todos = [];
-    const targetTodos = [];
-    originTodos.forEach(todo => {
-      todo.done ? targetTodos.push(todo) : todos.push(todo);
-    });
-
-    if (targetTodos.length === 0) return;
-
-    const yes = window.confirm(
-      `${targetTodos.length}개의 완료된 작업을 정말 삭제하시겠습니까?`
-    );
-    if (!yes) return;
-
-    this.setState({ todos });
-
-    // Optimistic Update
-    try {
-      await Promise.all(
-        targetTodos.map(async todo => {
-          await deleteTodo(todo._id);
-        })
-      );
-    } catch (error) {
-      console.error(error);
-      alert(`완료한 할 일을 삭제하지 못했습니다.`);
-      this.setState({ todos: originTodos });
-    }
-  };
-
-  handleDelete = async targetTodo => {
-    const yes = window.confirm(
-      `[${targetTodo.title}] 를 정말 삭제하시겠습니까?`
-    );
-    if (!yes) return;
-
-    this.props.onDeleteTodo(targetTodo._id, this.props.todos);
-  };
-
-  handleEdit = targetTodo => {
-    this.props.onEditTodo(targetTodo, this.props.todos);
   };
 
   render() {
@@ -113,13 +48,7 @@ class Todo extends Component {
 const mapStateToProps = state => ({ todos: state.todos });
 
 const mapActionsToProps = {
-  onGetTodos: getTodos,
-  onEditTodo: editTodo,
-  onPostTodo: postTodo,
-  onDeleteTodo: deleteTodo,
-  onPrintSomething: printSomething,
-  onNextPriority: nextPriority,
-  onToggleDone: toggleDone
+  onGetTodos: getTodos
 };
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => ({

@@ -4,8 +4,11 @@ import Input from "../commons/Input";
 import DateSelector from "../commons/DateSelector";
 import PropTypes from "prop-types";
 import PriorityCircle from "../commons/PriorityCircle";
-import { nextPriorityOf, priority } from "../commons/priority";
+import { nextPriorityOf } from "../commons/priority";
 import InputGroup from "../commons/InputGroup";
+
+import { connect } from "react-redux";
+import { postTodo } from "../../actions/todoActions";
 
 const emptyTodo = {
   title: "",
@@ -15,7 +18,7 @@ const emptyTodo = {
   priority: 1
 };
 
-export default class NewTodoForm extends Component {
+class NewTodoForm extends Component {
   state = {
     newTodo: emptyTodo,
     formOpened: false
@@ -55,7 +58,7 @@ export default class NewTodoForm extends Component {
         due.setFullYear(value);
         break;
       case "month":
-        due.setMonth(value-1);
+        due.setMonth(value - 1);
         break;
       case "date":
         due.setDate(value);
@@ -85,17 +88,17 @@ export default class NewTodoForm extends Component {
 
   renderControllButton = () => {
     const { newTodo } = this.state;
-    const { onAdd } = this.props;
+    const { onAddTodo } = this.props;
     return this.state.formOpened ? (
       <>
         <input
           className={`new-todo-control-btn ${!newTodo.title ? "disabled" : ""}`}
           type="submit"
           form="new-todo-form"
-          onClick={(e) => {
+          onClick={e => {
             e.preventDefault();
             if (!newTodo.title) return;
-            onAdd(newTodo);
+            onAddTodo(newTodo);
             this.handleFormOpenedToggle();
           }}
           value="확인"
@@ -182,6 +185,13 @@ export default class NewTodoForm extends Component {
   }
 }
 
-NewTodoForm.propTypes = {
-  onAdd: PropTypes.func.isRequired
+const mapDispatchToProps = dispatch => {
+  return {
+    onAddTodo: todo => dispatch(postTodo(todo))
+  };
 };
+
+export default connect(
+  () => ({}),
+  mapDispatchToProps
+)(NewTodoForm);
