@@ -51,14 +51,7 @@ const mapDispatchToProps = dispatch => ({
   onGetTodos: ()=>dispatch(requestGetTodos())
 });
 
-const mergeProps = (stateProps, dispatchProps, ownProps) => ({
-  ...stateProps,
-  ...dispatchProps,
-  ...ownProps
-});
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
-  mergeProps
+  mapDispatchToProps
 )(Todo);
