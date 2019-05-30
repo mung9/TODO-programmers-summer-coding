@@ -1,21 +1,13 @@
 import {
   SET_TODOS,
   ADD_TODO,
+  UPDATE_TODO,
   REMOVE_TODO,
   ROLLBACK,
   REQ_POST_TODO,
   REQ_GET_TODOS,
   REQ_DELETE_TODO,
-  POST_TODO_ERROR,
-  GET_TODOS_ERROR,
-  PUT_TODO,
-  PUT_TODO_ERROR,
-  DELETE_TODO,
-  DELETE_TODO_ERROR,
-  DELETE_DONE,
-  DELETE_DONE_ERROR,
-  PRINT_SOMETHING,
-  GET_TODOS_SUCCESS
+  REQ_PUT_TODO
 } from "../actions/types";
 
 const defaultState = [];
@@ -30,54 +22,20 @@ export default function(todos = defaultState, action) {
     case REQ_GET_TODOS:
     case REQ_POST_TODO:
     case REQ_DELETE_TODO:
+    case REQ_PUT_TODO:
       return todos;
     case SET_TODOS:
       return action.todos;
     case ADD_TODO:
       return [...todos, action.todo];
-    // case UPDATE_TODO:
+    case UPDATE_TODO:
+      return todos.map(todo =>
+        todo._id === action.todo._id ? action.todo : todo
+      );
     case REMOVE_TODO:
       return todos.filter(todo => todo._id !== action.id);
     case ROLLBACK:
       return action.originalTodos;
-    case GET_TODOS_SUCCESS:
-      return action.todos;
-    case GET_TODOS_ERROR:
-    case POST_TODO_ERROR:
-      alertAndLogError(action.error);
-      return;
-
-    case PUT_TODO:
-      if (!action.todo) {
-        console.error("`action` 객체에 `todo`필드가 없습니다.");
-      }
-      return todos.map(todo =>
-        todo._id === action.todo._id ? action.todo : todo
-      );
-    case PUT_TODO_ERROR:
-      alertAndLogError(action.error);
-      return action.originalTodos
-        ? action.originalTodos
-        : console.error("`originalTodos`필드가 없습니다.");
-    case DELETE_TODO:
-      return todos.filter(todo => {
-        return todo._id !== action.id;
-      });
-    case DELETE_TODO_ERROR:
-      alertAndLogError(action.error);
-      return action.originalTodos
-        ? action.originalTodos
-        : console.error("`originalTodos`필드가 없습니다.");
-    case DELETE_DONE:
-      return todos.filter(todo => !todo.done);
-    case DELETE_DONE_ERROR:
-      alertAndLogError(action.error);
-      return action.originalTodos
-        ? action.originalTodos
-        : console.error("`originalTodos`필드가 없습니다.");
-    case PRINT_SOMETHING:
-      console.log("PRINT_SOMETHING!!");
-      return todos;
     default:
       return todos;
   }

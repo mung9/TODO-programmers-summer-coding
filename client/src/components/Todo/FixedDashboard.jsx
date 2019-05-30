@@ -3,7 +3,6 @@ import { isOverdue } from "../../util/date";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { connect } from "react-redux";
 
-import { deleteDone } from "../../actions/todoActions";
 
 const PropRow = ({ name, label, value }) => {
   return (

@@ -269,8 +269,8 @@ input[type="submit"] {
   transform: rotate(180deg);
 }
 
-.fixed-dashboard .fixed-dashboard-content .props {
-}
+/* .fixed-dashboard .fixed-dashboard-content .props {
+} */
 
 .fixed-dashboard .prop {
   margin-bottom: .3em;

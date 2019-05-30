@@ -1,5 +1,5 @@
 import React from "react";
-import { priority } from "./priority";
+import { priority, nextPriorityOf } from "./priority";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function PriorityCircle({
@@ -13,7 +13,10 @@ export default function PriorityCircle({
       className="priority-circle clickable"
       onClick={e => {
         if (onPriorityChange) {
-          onPriorityChange(item);
+          onPriorityChange({
+            ...item,
+            priority: nextPriorityOf(item.priority)
+          });
         }
         e.stopPropagation();
       }}

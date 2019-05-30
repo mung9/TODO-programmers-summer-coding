@@ -18,7 +18,6 @@ import { connect } from "react-redux";
 import "./todo.css";
 
 import { requestGetTodos } from "../../actions/ajaxActions";
-// import {getTodos} from '../../actions/todoActions';
 
 class Todo extends Component {
   componentDidMount() {

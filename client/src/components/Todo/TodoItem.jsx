@@ -1,21 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import { isOverdue } from "../../util/date";
-
 import PriorityCircle from "../commons/PriorityCircle";
 import TodoContent from "./TodoContent";
-import {
-  // deleteTodo,
-  editTodo,
-  nextPriority,
-  toggleDone
-} from "../../actions/todoActions";
-
-import {requestDeleteTodo} from '../../actions/ajaxActions';
+import { requestDeleteTodo, requestPutTodo } from "../../actions/ajaxActions";
 
 class TodoItem extends Component {
   constructor(props) {
@@ -26,7 +16,9 @@ class TodoItem extends Component {
   }
 
   handleToggleEdit = () => {
-    const todoBeingEdited = this.state.todoBeingEdited ? null : {...this.props.todo};
+    const todoBeingEdited = this.state.todoBeingEdited
+      ? null
+      : { ...this.props.todo };
     this.setState({ todoBeingEdited });
   };
 
@@ -49,35 +41,28 @@ class TodoItem extends Component {
   }
 
   renderTop = () => {
-    const {
-      todo,
-      todos,
-      onDeleteTodo,
-      onNextPriority,
-      onEditTodo
-    } = this.props;
+    const { todo, todos, onDeleteTodo, onUpdateTodo } = this.props;
     const { todoBeingEdited } = this.state;
     return (
       <TodoItemTop
         todo={todo}
         todos={todos}
         onDelete={onDeleteTodo}
-        onPriorityChange={onNextPriority}
+        onUpdateTodo={onUpdateTodo}
         onToggleEdit={this.handleToggleEdit}
-        onEdit={onEditTodo}
         todoBeingEdited={todoBeingEdited}
       />
     );
   };
 
   render() {
-    const { todo, todos, onToggleDone } = this.props;
+    const { todo, todos, onUpdateTodo } = this.props;
     const className = "todo-item " + (todo.done ? "done" : "");
     return (
       <li
         className={className}
         value={todo.id}
-        onClick={() => onToggleDone(todo._id, todos)}
+        onClick={() => onUpdateTodo({ ...todo, done: !todo.done })}
       >
         {this.renderTop()}
         <TodoContent
@@ -169,12 +154,10 @@ const TodoItemTop = ({
   todo,
   todos,
   onDelete,
-  onPriorityChange,
   onToggleEdit,
-  onEdit,
+  onUpdateTodo,
   todoBeingEdited
 }) => {
-  // const controlBtnsOnEdit =
   return (
     <div className="todo-item-top">
       <div className="todo-item-control-buttons">
@@ -183,17 +166,17 @@ const TodoItemTop = ({
           <ControlButtonOnEdit
             todoBeingEdited={todoBeingEdited}
             todos={todos}
-            onEdit={onEdit}
+            onEdit={onUpdateTodo}
             onToggleEdit={onToggleEdit}
           />
         ) : (
-          <ControlButtonOnUsual onToggleEdit={onToggleEdit}/>
+          <ControlButtonOnUsual onToggleEdit={onToggleEdit} />
         )}
       </div>
       <div className="notification">
         <PriorityCircle
           item={todo}
-          onPriorityChange={() => onPriorityChange(todo._id, todos)}
+          onPriorityChange={onUpdateTodo}
           showLabel={false}
         />
         {todo.due && isOverdue(todo.due) && !todo.done ? (
@@ -215,11 +198,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onDeleteTodo: (id) => dispatch(requestDeleteTodo(id)),
-  onEditTodo: (todo, originalTodos) => dispatch(editTodo(todo, originalTodos)),
-  onNextPriority: (id, originalTodos) =>
-    dispatch(nextPriority(id, originalTodos)),
-  onToggleDone: (id, originalTodos) => dispatch(toggleDone(id, originalTodos))
+  onDeleteTodo: id => {
+    confirm("정말로 삭제하시겠습니까?") && dispatch(requestDeleteTodo(id));
+  },
+  onUpdateTodo: todo => dispatch(requestPutTodo(todo))
 });
 
 export default connect(
