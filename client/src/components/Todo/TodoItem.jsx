@@ -9,12 +9,13 @@ import { isOverdue } from "../../util/date";
 import PriorityCircle from "../commons/PriorityCircle";
 import TodoContent from "./TodoContent";
 import {
-  deleteTodo,
+  // deleteTodo,
   editTodo,
   nextPriority,
   toggleDone
 } from "../../actions/todoActions";
-import { copyFile } from "fs";
+
+import {requestDeleteTodo} from '../../actions/ajaxActions';
 
 class TodoItem extends Component {
   constructor(props) {
@@ -214,7 +215,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onDeleteTodo: (id, originalTodos) => dispatch(deleteTodo(id, originalTodos)),
+  onDeleteTodo: (id) => dispatch(requestDeleteTodo(id)),
   onEditTodo: (todo, originalTodos) => dispatch(editTodo(todo, originalTodos)),
   onNextPriority: (id, originalTodos) =>
     dispatch(nextPriority(id, originalTodos)),

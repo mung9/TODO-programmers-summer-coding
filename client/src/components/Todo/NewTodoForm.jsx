@@ -8,7 +8,7 @@ import { nextPriorityOf } from "../commons/priority";
 import InputGroup from "../commons/InputGroup";
 
 import { connect } from "react-redux";
-import { postTodo } from "../../actions/todoActions";
+import { requestPostTodo } from "../../actions/ajaxActions";
 
 const emptyTodo = {
   title: "",
@@ -187,7 +187,7 @@ class NewTodoForm extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAddTodo: todo => dispatch(postTodo(todo))
+    onAddTodo: todo => dispatch(requestPostTodo(todo))
   };
 };
 

@@ -1,7 +1,12 @@
 import {
-  POST_TODO,
+  SET_TODOS,
+  ADD_TODO,
+  REMOVE_TODO,
+  ROLLBACK,
+  REQ_POST_TODO,
+  REQ_GET_TODOS,
+  REQ_DELETE_TODO,
   POST_TODO_ERROR,
-  GET_TODOS,
   GET_TODOS_ERROR,
   PUT_TODO,
   PUT_TODO_ERROR,
@@ -9,7 +14,8 @@ import {
   DELETE_TODO_ERROR,
   DELETE_DONE,
   DELETE_DONE_ERROR,
-  PRINT_SOMETHING
+  PRINT_SOMETHING,
+  GET_TODOS_SUCCESS
 } from "../actions/types";
 
 const defaultState = [];
@@ -21,15 +27,26 @@ function alertAndLogError(error) {
 
 export default function(todos = defaultState, action) {
   switch (action.type) {
-    case GET_TODOS:
+    case REQ_GET_TODOS:
+    case REQ_POST_TODO:
+    case REQ_DELETE_TODO:
+      return todos;
+    case SET_TODOS:
+      return action.todos;
+    case ADD_TODO:
+      return [...todos, action.todo];
+    // case UPDATE_TODO:
+    case REMOVE_TODO:
+      return todos.filter(todo => todo._id !== action.id);
+    case ROLLBACK:
+      return action.originalTodos;
+    case GET_TODOS_SUCCESS:
       return action.todos;
     case GET_TODOS_ERROR:
     case POST_TODO_ERROR:
       alertAndLogError(action.error);
       return;
-    case POST_TODO:
-      return [...todos, action.todo];
-      return;
+
     case PUT_TODO:
       if (!action.todo) {
         console.error("`action` 객체에 `todo`필드가 없습니다.");

@@ -1,7 +1,7 @@
 import * as todoService from "../services/service";
 import {
-  POST_TODO,
-  GET_TODOS,
+  REQ_POST_TODO,
+  REQ_GET_TODOS,
   PUT_TODO,
   DELETE_TODO,
   PRINT_SOMETHING,
@@ -20,7 +20,7 @@ export function postTodo(todo) {
     try {
       const { data: newTodo } = await todoService.postTodo(todo);
       dispatch({
-        type: POST_TODO,
+        type: REQ_POST_TODO,
         todo: newTodo
       });
     } catch (error) {
@@ -42,7 +42,7 @@ export function getTodos() {
     try {
       const { data: todos } = await todoService.getTodos();
       dispatch({
-        type: GET_TODOS,
+        type: REQ_GET_TODOS,
         todos
       });
     } catch (error) {

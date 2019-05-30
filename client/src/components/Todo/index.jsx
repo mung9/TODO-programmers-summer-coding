@@ -17,7 +17,8 @@ import { connect } from "react-redux";
 
 import "./todo.css";
 
-import {getTodos} from '../../actions/todoActions';
+import { requestGetTodos } from "../../actions/ajaxActions";
+// import {getTodos} from '../../actions/todoActions';
 
 class Todo extends Component {
   componentDidMount() {
@@ -47,9 +48,9 @@ class Todo extends Component {
 
 const mapStateToProps = state => ({ todos: state.todos });
 
-const mapActionsToProps = {
-  onGetTodos: getTodos
-};
+const mapDispatchToProps = dispatch => ({
+  onGetTodos: ()=>dispatch(requestGetTodos())
+});
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => ({
   ...stateProps,
@@ -59,6 +60,6 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => ({
 
 export default connect(
   mapStateToProps,
-  mapActionsToProps,
+  mapDispatchToProps,
   mergeProps
 )(Todo);

@@ -30,7 +30,8 @@
     "helmet": "^3.18.0",
     "joi": "^14.3.1",
     "joi-objectid": "^2.0.0",
-    "mongoose": "^5.5.9"
+    "mongoose": "^5.5.9",
+    "redux-saga": "^1.0.2"
   },
   "devDependencies": {}
 }
